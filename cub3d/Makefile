@@ -11,6 +11,7 @@ COM_SRCS =
 SRCS = check_map.c \
 get_next_line/get_next_line.c \
        get_next_line/get_next_line_utils.c \
+	   get_next_line/ft_split.c \
 		# get_next_line/$(GNL_SRCS)\
 
 

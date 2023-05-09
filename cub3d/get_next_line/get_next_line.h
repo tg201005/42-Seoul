@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/01 09:17:48 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/08 18:06:05 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/09 15:01:17 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ t_list	*init_node(int fd);
 char	*ft_strjoin(char *s1, char *s2);
 t_list	*make_node(t_list **headp, int fd);
 char	*ft_substr(char **save, int s_i);
+char	**ft_split(char const *s, char c);
 #endif
