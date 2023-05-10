@@ -8,7 +8,8 @@ SRCS_DIR =
 COM_SRCS = 
 
 
-SRCS = check_map.c \
+SRCS = main.c \
+	check_map.c \
 get_next_line/get_next_line.c \
        get_next_line/get_next_line_utils.c \
 	   get_next_line/ft_split.c \
