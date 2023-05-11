@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 20:10:31 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/10 20:45:57 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/11 21:05:20 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	check_zero_on_side(t_info *info, int i, int j)
 	}
 }
 
-void check_map(t_info *info)
+void check_map_valid(t_info *info)
 {
 	int i;
 	int j;

@@ -5,8 +5,8 @@
 #include "./get_next_line/get_next_line.h"
 
 
-#define width 640
-#define height 480
+// #define width 640
+// #define height 480
 
 
 typedef struct	s_info
@@ -33,4 +33,4 @@ typedef struct	s_info
 
 }				t_info;
 
-void check_map(t_info *info);
+void check_map_valid(t_info *info);

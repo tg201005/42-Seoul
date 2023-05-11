@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 20:22:43 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/10 20:46:56 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/11 22:44:39 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,15 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-void check_file_open(char *path)
+void check_file_open(char **path, char *value)
 {
 	int fd;
 	int end;
 
-	end = ft_strlen(path);
-	path[end - 1] = '\0';
-	fd = open(path, O_RDONLY);
+	*path = value;
+	end = ft_strlen(*path);
+	path[0][end - 1] = '\0';
+	fd = open(*path, O_RDONLY);
 	if (fd == -1)
 	{
 		//printf error fd av
@@ -98,25 +99,13 @@ void fill_info(char *line, t_info *info)
 
 	key_value = ft_split(line, ' ');
 	if (ft_strcmp(key_value[0], "NO") && key_value[1] != NULL)
-	{
-		info->N_texpath = key_value[1];
-		check_file_open(info->N_texpath);
-	}
+		check_file_open(&info->N_texpath, key_value[1]);
 	else if (ft_strcmp(key_value[0], "SO") && key_value[1] != NULL)
-	{
-		info->S_texpath = key_value[1];
-		check_file_open(info->S_texpath);
-	}
+		check_file_open(&info->S_texpath, key_value[1]);
 	else if (ft_strcmp(key_value[0], "WE") && key_value[1] != NULL)
-	{
-		info->W_texpath = key_value[1];
-		check_file_open(info->W_texpath);
-	}
+		check_file_open(&info->W_texpath, key_value[1]);
 	else if (ft_strcmp(key_value[0], "EA") && key_value[1] != NULL)
-	{
-		info->E_texpath = key_value[1];
-		check_file_open(info->E_texpath);
-	}
+		check_file_open(&info->E_texpath, key_value[1]);
 	else if (ft_strcmp(key_value[0], "F") && key_value[1] != NULL)
 		info->floor_color = rgb_to_hex(key_value[1]);
 	else if (ft_strcmp(key_value[0], "C") && key_value[1] != NULL)
@@ -127,7 +116,6 @@ void fill_info(char *line, t_info *info)
 		exit (0);
 	}
 	free (key_value);
-	free (line);
 }
 
 int line_is_new_line(char *line)
@@ -174,42 +162,107 @@ void print_info(t_info *info)
 }
 
 
-void fill_check_info(t_info *info, char *av)
+int	cub_file_open(char *path)
 {
-	int fd;
-	char *line;
-	int i;
+	int	fd;
 
-	i = 0;
-	info->map = (char **)malloc(sizeof(char *) * 100);
-	fd = open(av, O_RDONLY);
+	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Error\n");
 		exit(0);
 	}
+	return (fd);
+}
+
+
+// int	info_is_fulled(t_info *info, char *line)
+// {
+// 	//all info is filled
+// 	if (line_is_in_map && )
+
+
+
+// 	if (line == NULL)
+// 		return (1);
+// 	if (line_is_new_line(line))
+// 		return (1);
+// 	if (line_is_in_map(info))
+// 		return (1);
+// 	return (0);
+// }
+
+void	fill_info_hei_wid(t_info *info, int fd)
+{
+	char *line;
+	int h;
+	int w;
+
+	h = 0;
+	w = 0;
 	while (1)
 	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		else if (line_is_new_line(line))
+			continue;
+		else if (!line_is_in_map(info))
+			continue ;
+		else if (line_is_in_map(info))
+		{
+			if (w == 0)	
+				w = ft_strlen(line) - 1;
+			if (w != ft_strlen(line) - 1)
+			{
+				printf("Error\n");
+				exit(0);
+			}
+			h++;
+		}
+		free(line);
+	}
+	info->mapHeight = h;
+	info->mapWidth = w;
+	close(fd);
+}
+
+
+void	fill_info_another(t_info *info, int fd)
+{
+	char *line;
+	int i;
+
+	i = 0;
+	info->map = (char **)malloc(sizeof(char *) * (info->mapHeight + 1));
+	while (1)
+	{
+		// if (info_is_fulled(info, line))
+		// 	break ;
+		// else if (line ==)
+		// 	continue ;
+		// else if (line_is_new_line(line))
+		// 	continue;
+		// else if (line_is_in_map(info))
+		// 	continue ;
+		// else
+		// 	fill_info(line, info);
+
+
+
+
 		line = get_next_line(fd);
 		printf ("line = %s\n", line);
 		// printf ("in_map %d\n",line_is_in_map(info));
 		if (line == NULL)
 			break ;
 		else if (line_is_new_line(line))
-		{
-			free(line); 
 			continue;
-		}
 		else if (!line_is_in_map(info))
-		{
 			fill_info(line, info);
-			continue ;
-		}
 		else if (line_is_in_map(info))
 		{
 			info->map[i] = line;
-			info->mapWidth= ft_strlen(line) - 1;
-			//check length of line
 			i++;
 			continue ;
 		}
@@ -218,12 +271,18 @@ void fill_check_info(t_info *info, char *av)
 			printf("Error\n");
 			exit(0);
 		}
-		free(line);
+		free(line);		
 	}
-	info->mapHeight = i;
+	info->map[info->mapHeight] = NULL;
 	close(fd);
+}	
+
+void fill_check_info(t_info *info, char *path)
+{
+	fill_info_hei_wid(info, cub_file_open(path));
+	fill_info_another(info, cub_file_open(path));
+	check_map_valid(info);
 	print_info(info);
-	// check_map(info);
 }
 
 void	init_info(t_info *info)
