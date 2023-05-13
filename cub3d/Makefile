@@ -8,8 +8,15 @@ SRCS_DIR =
 COM_SRCS = 
 
 
-SRCS = main.c \
-	check_map.c \
+SRCS = p_parsing.c \
+	p_check_map_valid_0.c \
+	p_check_map_valid_1.c \
+	p_step1_0.c \
+	p_step1_1.c \
+	p_step2_0.c \
+	p_step2_1.c \
+	p_ft_func.c\
+	p_utill_func.c \
 get_next_line/get_next_line.c \
        get_next_line/get_next_line_utils.c \
 	   get_next_line/ft_split.c \

@@ -6,11 +6,11 @@
 /*   By: tyi <tyi@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 00:33:34 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/09 18:53:47 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/13 13:57:22 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "./get_next_line.h"
 
 size_t	count(char const *s, char c)
 {
