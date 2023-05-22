@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:10:38 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/22 18:46:12 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/22 18:58:54 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ std::string get_line_eof()
 {
     std::string line;
     
-    std::cout << "here" << std::endl;
-
-    while (true) {
+    while (1) {
         std::getline(std::cin >> std::ws, line);
         
         if (!line.empty())
