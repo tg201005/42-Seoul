@@ -3,7 +3,10 @@ NAME = a.out
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = megaphone.cpp
+SRCS = HumanA.cpp\
+HumanB.cpp\
+Weapon.cpp\
+main.cpp\
 
 OBJS = $(SRCS:.cpp=.o)
 
