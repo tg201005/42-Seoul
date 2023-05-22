@@ -6,11 +6,11 @@
 /*   By: tyi <tyi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:10:38 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/21 20:02:01 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/22 18:46:12 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ex01.hpp"
+#include "PhoneBook.hpp"
 
 void    Contact::set_contact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string darkest_secret)
 {
@@ -28,7 +28,7 @@ std::string truncating(std::string str)
     return (str);
 }
 
-void    Contact::print_contact(std::string index)
+void    Contact::print_simple_contact(std::string index)
 {
     std::cout << std::setw(10) << "Index" << "|";
     std::cout << std::setw(10) << "First name" << "|";
@@ -38,13 +38,38 @@ void    Contact::print_contact(std::string index)
     std::cout << std::setw(10) << truncating(this->first_name) << "|";
     std::cout << std::setw(10) << truncating(this->last_name) << "|";
     std::cout << std::setw(10) << truncating(this->nickname) << std::endl;
-
-    // // check phone number and darkest secret
-    // std::cout << "Phone number : " << this->phone_number << std::endl;
-    // std::cout << "darkest_secret" << this->darkest_secret << std::endl;
-
 }
 
+void    Contact::print_contact(std::string index)
+{
+    std::cout << "Index : " << index << std::endl;
+    std::cout << "First name : " << this->first_name << std::endl;
+    std::cout << "Last name : " << this->last_name << std::endl;
+    std::cout << "Nickname : " << this->nickname << std::endl;
+    std::cout << "Phone number : " << this->phone_number << std::endl;
+    std::cout << "Darkest secret : " << this->darkest_secret << std::endl;
+}
+
+std::string get_line_eof()
+{
+    std::string line;
+    
+    std::cout << "here" << std::endl;
+
+    while (true) {
+        std::getline(std::cin >> std::ws, line);
+        
+        if (!line.empty())
+            break;
+        
+        if (std::cin.eof())
+            exit(0);
+        
+        std::cout << "Invalid input" << std::endl;
+    }
+    
+    return line;
+}
 void   PhoneBook::add_contact()
 {
     std::string first_name;
@@ -54,24 +79,19 @@ void   PhoneBook::add_contact()
     std::string darkest_secret;
 
     std::cout << "Enter first name: " << std::endl; 
-    // std::cin >> (first_name);
-    std::getline(std::cin, first_name);
+    first_name = get_line_eof();
 
     std::cout << "Enter last name: " << std::endl;
-    // std::cin >> (last_name);
-    std::getline(std::cin, last_name);
+    last_name = get_line_eof();
 
     std::cout << "Enter nickname: " << std::endl;
-    // std::cin >> (nickname);
-    std::getline(std::cin, nickname);
+    nickname = get_line_eof();
 
     std::cout << "Enter phone number: " << std::endl;
-    // std::cin.ignore();
-    std::getline(std::cin, phone_number);
+    phone_number = get_line_eof();
 
     std::cout << "Enter darkest secret: " << std::endl;
-    // std::cin >> (darkest_secret);
-    std::getline(std::cin, darkest_secret);
+    darkest_secret = get_line_eof();
 
     contacts[nb_contacts % 8].set_contact(first_name, last_name, nickname, phone_number, darkest_secret);
     nb_contacts++;
@@ -83,14 +103,24 @@ void    PhoneBook::search_contact()
 {
     std::string input;
     int index;
-    Contact search_contact;
 
+    for (int i = 0; i < nb_contacts; i++)
+    {
+        if (i == 8 && nb_contacts > 8)
+            break ;
+        contacts[i].print_simple_contact(std::to_string(i));
+    }
+    
     std::cout << "Enter index: " << std::endl;
-    std::cin >> (input);
+    input = get_line_eof();
+    if (!(input == "0" || input == "1" || input == "2" || input == "3" || input == "4" || input == "5" || input == "6" || input == "7"))
+    {
+        std::cout << "Invalid index" << std::endl;
+        return ;
+    }
     index = std::stoi(input);
-    search_contact = contacts[index];
     if (index >= 0 && index < 8)
-        search_contact.print_contact(input);
+        contacts[index].print_contact(input);
     else
         std::cout << "Invalid index" << std::endl;
 }
@@ -128,11 +158,10 @@ int main(void)
 
     while (1)
     {
-        std::cout << "Out program don't supprot spaces in input" << std::endl;
+        std::cout << "--- PHONEBOOK ---" << std::endl;
         std::cout << "Enter a command (ADD, SEARCH, EXIT): " << std::endl;
-        std::getline(std::cin, command);
+        command = get_line_eof();
 
-        std::cout << "command: " << command << std::endl;
         if (command == "EXIT")
             break ;
         else if (command == "ADD")

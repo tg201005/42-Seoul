@@ -9,6 +9,7 @@ class Contact
         ~Contact();
 
         void set_contact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string darkest_secret);
+        void print_simple_contact(std::string index);
         void print_contact(std::string index);
 
     private:
