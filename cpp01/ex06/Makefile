@@ -1,4 +1,4 @@
-NAME = a.out
+NAME = harlFilter
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98

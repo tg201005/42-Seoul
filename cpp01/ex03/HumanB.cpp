@@ -3,6 +3,7 @@
 HumanB::HumanB(std::string name)
 {
     this->name = name;
+    std::cout << this->name << " is born" << std::endl;
 }
 
 HumanB::~HumanB()
@@ -19,6 +20,6 @@ void    HumanB::setWeapon(Weapon &weapon)
 
 void    HumanB::attack()
 {
-    std::cout << this->name << " attacks with his " << this->weapon->getType() << std::endl;
+    std::cout << this->name << " attacks with there " << this->weapon->getType() << std::endl;
 }
 

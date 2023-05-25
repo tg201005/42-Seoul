@@ -2,6 +2,7 @@
 
 Weapon::Weapon(std::string type) : type(type)
 {
+    std::cout << this->type << ": Weapon born!" << std::endl;
 }
 
 Weapon::~Weapon()

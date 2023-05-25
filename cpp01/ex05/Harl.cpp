@@ -21,17 +21,32 @@ void    Harl::error(){
 }
 
 void Harl::complain(std::string level) {
-    Harl harl;
-
     std::string levels[4] = { "debug", "info", "warning", "error" };
     void (Harl::*functions[4])() = { &Harl::debug, &Harl::info, &Harl::warning, &Harl::error };
 
     for (int i = 0; i < 4; i++) {
         if (levels[i] == level) {
-            (harl.*functions[i])();
+            (this->*functions[i])();
             return;
         }
     }
 
     std::cout << "Invalid level" << std::endl;
 }
+
+// int main() {
+//     // 함수 포인터 선언
+//     int (*operation)(int, int);
+
+//     // 덧셈 함수를 가리키는 함수 포인터
+//     operation = add;
+//     int result = operation(5, 3);
+//     std::cout << "덧셈 결과: " << result << std::endl;
+
+//     // 뺄셈 함수를 가리키는 함수 포인터
+//     operation = subtract;
+//     result = operation(5, 3);
+//     std::cout << "뺄셈 결과: " << result << std::endl;
+
+//     return 0;
+// }

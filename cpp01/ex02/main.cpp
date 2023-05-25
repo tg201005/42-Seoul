@@ -15,3 +15,7 @@ int main()
     std::cout << "StringPTR: " << *stringPTR << std::endl;
     std::cout << "StringREF: " << stringREF << std::endl;
 }
+
+//when use reference
+// first :: never have null, so valid object
+// second :: 
