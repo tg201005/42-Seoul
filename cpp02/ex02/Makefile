@@ -3,10 +3,10 @@ NAME = a.out
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = Zombie.cpp\
-main.cpp\
-newZombie.cpp\
-randomChump.cpp\
+SRCS = main.cpp\
+	Fixed.cpp\
+
+
 
 
 OBJS = $(SRCS:.cpp=.o)
