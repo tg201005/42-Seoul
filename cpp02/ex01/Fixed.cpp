@@ -21,9 +21,10 @@ Fixed::Fixed(const int value){
 
 Fixed::Fixed(const float value){
     std::cout << "Float constructor called" << std::endl;
-    this->fixed_point_value = roundf(value * (1 << this->fractional_bits));
+    this->fixed_point_value = std::roundf(value * (1 << this->fractional_bits));
 }
 
+///////////////////////////
 
 Fixed&    Fixed::operator=(const Fixed &fixed){
     
@@ -32,6 +33,7 @@ Fixed&    Fixed::operator=(const Fixed &fixed){
     return (*this);
 }
 
+///////////////////////////
 
 float   Fixed::toFloat() const{
     return (static_cast<float>(this->getRawBits()) / (1 << this->fractional_bits));
@@ -41,17 +43,23 @@ int     Fixed::toInt() const{
     return (static_cast<int>(this->getRawBits()) >> this->fractional_bits);
 }
 
-std::ostream& operator<<(std::ostream& os, const Fixed& fixed){
-    os << fixed.toFloat();
-    return (os);
-}
+///////////////////////////
 
 int     Fixed::getRawBits(void) const{
-    std::cout << "getRawBits member function called" << std::endl;
+    // std::cout << "getRawBits member function called" << std::endl;
     return (this->fixed_point_value);
 }
 
 void    Fixed::setRawBits(int const raw){
-    std::cout << "setRawBits member function called" << std::endl;
+    // std::cout << "setRawBits member function called" << std::endl;
     this->fixed_point_value = raw;
+}
+
+///////////////////////////
+
+//fixed format of << operator overloading
+
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed){
+    os << fixed.toFloat();
+    return (os);
 }

@@ -19,3 +19,5 @@ int main() {
     
     return 0;
 }
+
+//the goal of this subject is changing float to fixed point
