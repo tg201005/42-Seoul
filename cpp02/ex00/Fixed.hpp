@@ -13,10 +13,13 @@ class Fixed{
     public:
         Fixed();
         ~Fixed();
-        Fixed(const Fixed &fixed);
-        Fixed& operator=(const Fixed &fixed);
+        Fixed(Fixed &fixed);
+        
+        //we need to toss the instance of the class to the copy constructor
+        Fixed& operator=(Fixed &fixed);
+        
         int getRawBits(void) const;
-        void setRawBits(int const raw);
+        void setRawBits(const int raw);
 };
 
 #endif
