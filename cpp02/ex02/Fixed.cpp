@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 12:51:24 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/26 17:48:12 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/27 16:26:37 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,30 +142,22 @@ void    Fixed::setRawBits(int const raw){
 
 ////////////
 
-
-Fixed&  Fixed::min(Fixed &a, Fixed &b){
-    if (a < b)
-        return (a);
-    return (b);
+static Fixed&    min(Fixed &a, Fixed &b){
+    return (a < b ? a : b);
 }
 
-const Fixed&  Fixed::min(Fixed &a, Fixed &b){
-    if (a < b)
-        return (const_cast<Fixed&>a);
-    return (const_cast<Fixed&>b);
+const static Fixed&    min(const Fixed &a, const Fixed &b){
+    return (a < b ? const_cast<Fixed&>(a) : const_cast<Fixed&>(b));
 }
 
-Fixed&  Fixed::max(const Fixed &a, const Fixed &b){
-    if (a > b)
-        return (const_cast<Fixed&>(a));
-    return (const_cast<Fixed&>(b));
+static Fixed&    max(Fixed &a, Fixed &b){
+    return (a > b ? a : b);
 }
 
-const Fixed&  Fixed::max(Fixed &a, Fixed &b){
-    if (a > b)
-        return (a);
-    return (b);
+const static Fixed&    max(const Fixed &a, const Fixed &b){
+    return (a > b ? const_cast<Fixed&>(a) : const_cast<Fixed&>(b));
 }
+
 
 ////////////
 
