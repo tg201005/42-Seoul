@@ -39,6 +39,8 @@ float   Fixed::toFloat() const{
     return (static_cast<float>(this->getRawBits()) / (1 << this->fractional_bits));
 }
 
+//부동 소수점으로 나타난 float 혹은 double 값에 대해선 비트 연산이 작동하지 않기 때문에
+
 int     Fixed::toInt() const{
     return (static_cast<int>(this->getRawBits()) >> this->fractional_bits);
 }
