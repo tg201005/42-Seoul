@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 12:51:24 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/27 16:26:37 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/27 18:29:27 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,20 +142,21 @@ void    Fixed::setRawBits(int const raw){
 
 ////////////
 
-static Fixed&    min(Fixed &a, Fixed &b){
+Fixed&    min(Fixed &a, Fixed &b){
     return (a < b ? a : b);
 }
 
-const static Fixed&    min(const Fixed &a, const Fixed &b){
-    return (a < b ? const_cast<Fixed&>(a) : const_cast<Fixed&>(b));
+const Fixed&    min(const Fixed &a, const Fixed &b){
+    return (a < b ? a : b);
 }
 
-static Fixed&    max(Fixed &a, Fixed &b){
+Fixed&    Fixed::max(Fixed &a, Fixed &b){
     return (a > b ? a : b);
 }
 
-const static Fixed&    max(const Fixed &a, const Fixed &b){
-    return (a > b ? const_cast<Fixed&>(a) : const_cast<Fixed&>(b));
+const Fixed&    Fixed::max(const Fixed &a, const Fixed &b){
+    std::cout << "max function called" << std::endl;
+    return (a > b ? a : b);
 }
 
 
