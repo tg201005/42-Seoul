@@ -6,7 +6,7 @@
 /*   By: tyi <tyi@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 12:51:24 by tyi               #+#    #+#             */
-/*   Updated: 2023/05/26 13:04:28 by tyi              ###   ########.fr       */
+/*   Updated: 2023/05/27 19:18:54 by tyi              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ Fixed::~Fixed(){
 
 Fixed&    Fixed::operator=(const Fixed &fixed){
     
-    std::cout <<"Copy operator called" << std::endl;
+    // std::cout <<"Copy operator called" << std::endl;
     this->fixed_point_value = fixed.getRawBits();
     return (*this);
 }
@@ -142,17 +142,21 @@ void    Fixed::setRawBits(int const raw){
 
 ////////////
 
-
-Fixed&  Fixed::min(Fixed &a, Fixed &b){
-    if (a < b)
-        return (a);
-    return (b);
+Fixed&    min(Fixed &a, Fixed &b){
+    return (a < b ? a : b);
 }
 
-Fixed&  Fixed::max(const Fixed &a, const Fixed &b){
-    if (a > b)
-        return (const_cast<Fixed&>(a));
-    return (const_cast<Fixed&>(b));
+const Fixed&    min(const Fixed &a, const Fixed &b){
+    return (a < b ? a : b);
+}
+
+Fixed&    Fixed::max(Fixed &a, Fixed &b){
+    return (a > b ? a : b);
+}
+
+const Fixed&    Fixed::max(const Fixed &a, const Fixed &b){
+    std::cout << "max function called" << std::endl;
+    return (a > b ? a : b);
 }
 
 
