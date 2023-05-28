@@ -4,7 +4,7 @@
 # define SCAVTRAP_HPP
 
 
-class ScavTrap : public ClapTrap{
+class ScavTrap : virtual public ClapTrap{
     
     public:
         ScavTrap(std::string name);

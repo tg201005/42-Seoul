@@ -1,15 +1,12 @@
-#include "FragTrap.hpp"
-
-//write main code using class ClapTrap and FragTrap
+#include "DiamondTrap.hpp"
 
 int main(){
-    FragTrap ft("FragTrap");
-    FragTrap ft2(ft);
-    FragTrap ft3("FragTrap3");
-    ft3 = ft2;
-    ft.attack("target");
-    ft.takeDamage(10);
-    ft.beRepaired(10);
-    ft.highFivesGuys();
+    DiamondTrap dt("DiamondTrap");
+    dt.attack("target");
+    dt.takeDamage(5);
+    dt.beRepaired(5);
+    dt.guardGate();
+    dt.highFivesGuys();
+    dt.whoAmI();
     return (0);
 }
