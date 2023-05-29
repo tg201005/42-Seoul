@@ -36,19 +36,20 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &ct){
 ////////////////////////// METHODS //////////////////////////
 
 void ClapTrap::attack(std::string const &target){
-    if (isDefeated(this))
+    if (this->isDefeated())
         return ;
     std::cout << "ClapTrap " << this->Name << " attacks " << target << ", causing " << this->Attack_damage << " points of damage!" << std::endl;
     this->Energy_points--;
 }
 
 void ClapTrap::takeDamage(unsigned int amount){
+    if (this->isDefeated())
     std::cout << "ClapTrap " << this->Name << " takes " << amount << " points of damage!" << std::endl;
     this->Hit_points = this->Hit_points - amount;
 }
 
 void ClapTrap::beRepaired(unsigned int amount){
-    if (isDefeated(this))
+    if (this->isDefeated())
         return ;
     std::cout << "ClapTrap " << this->Name << " is repaired for " << amount << " points of damage!" << std::endl;
     this->Hit_points = this->Hit_points + amount;
@@ -75,16 +76,16 @@ int ClapTrap::getAttack_damage(){
 
 ////////////////////////// UTILS //////////////////////////
 
-bool ClapTrap::isDefeated (ClapTrap* ct)
+bool ClapTrap::isDefeated ()
 {
-    if (ct->Hit_points <= 0)
+    if (this->Hit_points <= 0)
     {
-        std::cout << "ClapTrap " << ct->Name << " is dead!" << std::endl;
+        std::cout << "ClapTrap " << this->Name << " is dead!" << std::endl;
         return (1);
     }
-    if (ct->Energy_points <= 0)
+    if (this->Energy_points <= 0)
     {
-        std::cout << "ClapTrap " << ct->Name << " is out of energy!" << std::endl;
+        std::cout << "ClapTrap " << this->Name << " is out of energy!" << std::endl;
         return (1);
     }
     return (0);

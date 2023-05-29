@@ -28,7 +28,7 @@ class ClapTrap{
         int getEnergy_points();
         int getAttack_damage();
         
-        bool isDefeated(ClapTrap *ct);
+        bool isDefeated();
 
 };
 
