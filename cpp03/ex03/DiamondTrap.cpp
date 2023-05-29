@@ -2,17 +2,17 @@
 
 DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name"), ScavTrap(name), FragTrap(name){
     this->Name = name;
-    this->Hit_points = FragTrap::Hit_points;
-    this->Energy_points = ScavTrap::Energy_points;
-    this->Attack_damage = FragTrap::Attack_damage;
+    this->hitPoints = FragTrap::hitPoints;
+    this->energyPoints = ScavTrap::energyPoints;
+    this->attackDamage = FragTrap::attackDamage;
     std::cout << "DiamondTrap " << this->Name << " is born!" << std::endl;
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap &dt) : ClapTrap(dt.Name + "_clap_name"), ScavTrap(dt.Name), FragTrap(dt.Name){
     this->Name = dt.Name;
-    this->Hit_points = FragTrap::Hit_points;
-    this->Energy_points = ScavTrap::Energy_points;
-    this->Attack_damage = FragTrap::Attack_damage;
+    this->hitPoints = FragTrap::hitPoints;
+    this->energyPoints = ScavTrap::energyPoints;
+    this->attackDamage = FragTrap::attackDamage;
     std::cout << "DiamondTrap " << this->Name << " is born!" << std::endl;
 }
 
@@ -22,9 +22,9 @@ DiamondTrap::~DiamondTrap(){
 
 DiamondTrap &DiamondTrap::operator=(const DiamondTrap &dt){
     this->Name = dt.Name;
-    this->Hit_points = FragTrap::Hit_points;
-    this->Energy_points = ScavTrap::Energy_points;
-    this->Attack_damage = FragTrap::Attack_damage;
+    this->hitPoints = FragTrap::hitPoints;
+    this->energyPoints = ScavTrap::energyPoints;
+    this->attackDamage = FragTrap::attackDamage;
     return (*this);
 }
 

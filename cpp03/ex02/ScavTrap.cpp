@@ -2,16 +2,16 @@
 
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name){
     std::cout << "ScavTrap name constructor called" << std::endl;
-    this->Hit_points = 100;
-    this->Energy_points = 50;
-    this->Attack_damage = 20;  
+    this->hitPoints = 100;
+    this->energyPoints = 50;
+    this->attackDamage = 20;  
 }
 
 ScavTrap::ScavTrap(const ScavTrap &st) : ClapTrap(st){
     std::cout << "ScavTrap copy constructor called" << std::endl;
-    this->Hit_points = st.Hit_points;
-    this->Energy_points = st.Energy_points;
-    this->Attack_damage = st.Attack_damage;
+    this->hitPoints = st.hitPoints;
+    this->energyPoints = st.energyPoints;
+    this->attackDamage = st.attackDamage;
 }
 
 ScavTrap::~ScavTrap(){
@@ -21,9 +21,9 @@ ScavTrap::~ScavTrap(){
 ScavTrap& ScavTrap::operator=(const ScavTrap &st){
     std::cout << "ScavTrap assignation operator called" << std::endl;
     this->Name = st.Name;
-    this->Hit_points = st.Hit_points;
-    this->Energy_points = st.Energy_points;
-    this->Attack_damage = st.Attack_damage;
+    this->hitPoints = st.hitPoints;
+    this->energyPoints = st.energyPoints;
+    this->attackDamage = st.attackDamage;
     return (*this);
 }
 
