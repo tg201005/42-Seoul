@@ -8,7 +8,7 @@ class ClapTrap{
 
     protected:
         std::string Name;   
-        int Hitpoints;
+        int Hit_points;
         int Energy_points;
         int Attack_damage;
 
@@ -24,7 +24,7 @@ class ClapTrap{
         void beRepaired(unsigned int amount);
 
         std::string getName();
-        int getHitpoints();
+        int getHit_points();
         int getEnergy_points();
         int getAttack_damage();
         

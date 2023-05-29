@@ -8,12 +8,12 @@ ClapTrap::ClapTrap(const ClapTrap &ct){
     std::cout << "ClapTrap copy constructor called" << std::endl;
     *this = ct;
     this->Name = ct.Name;
-    this->Hitpoints = ct.Hitpoints;
+    this->Hit_points = ct.Hit_points;
     this->Energy_points = ct.Energy_points;
     this->Attack_damage = ct.Attack_damage;
 }
 
-ClapTrap::ClapTrap(std::string name) : Name(name), Hitpoints(10), Energy_points(10), Attack_damage(0){
+ClapTrap::ClapTrap(std::string name) : Name(name), Hit_points(10), Energy_points(10), Attack_damage(0){
     std::cout << "ClapTrap string constructor called" << std::endl;
 }
 
@@ -26,7 +26,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &ct){
     if (this != &ct)
     {
         this->Name = ct.Name;
-        this->Hitpoints = ct.Hitpoints;
+        this->Hit_points = ct.Hit_points;
         this->Energy_points = ct.Energy_points;
         this->Attack_damage = ct.Attack_damage;
     }
@@ -44,14 +44,14 @@ void ClapTrap::attack(std::string const &target){
 
 void ClapTrap::takeDamage(unsigned int amount){
     std::cout << "ClapTrap " << this->Name << " takes " << amount << " points of damage!" << std::endl;
-    this->Hitpoints = this->Hitpoints - amount;
+    this->Hit_points = this->Hit_points - amount;
 }
 
 void ClapTrap::beRepaired(unsigned int amount){
     if (isDefeated(this))
         return ;
     std::cout << "ClapTrap " << this->Name << " is repaired for " << amount << " points of damage!" << std::endl;
-    this->Hitpoints = this->Hitpoints + amount;
+    this->Hit_points = this->Hit_points + amount;
     this->Energy_points--;
 }
 
@@ -61,8 +61,8 @@ std::string ClapTrap::getName(){
     return (this->Name);
 }
 
-int ClapTrap::getHitpoints(){
-    return (this->Hitpoints);
+int ClapTrap::getHit_points(){
+    return (this->Hit_points);
 }
 
 int ClapTrap::getEnergy_points(){
@@ -77,7 +77,7 @@ int ClapTrap::getAttack_damage(){
 
 bool ClapTrap::isDefeated (ClapTrap* ct)
 {
-    if (ct->Hitpoints <= 0)
+    if (ct->Hit_points <= 0)
     {
         std::cout << "ClapTrap " << ct->Name << " is dead!" << std::endl;
         return (1);
