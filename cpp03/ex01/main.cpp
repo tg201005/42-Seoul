@@ -2,17 +2,17 @@
 #include "ScavTrap.hpp"
 
 int main(){
-    ClapTrap ct("ClapTrap");
     ScavTrap st("ScavTrap");
-
-    ct.attack("target");
-    ct.takeDamage(10);
-    ct.beRepaired(10);
 
     st.attack("target");
     st.takeDamage(10);
+    st.print_status();
     st.beRepaired(10);
+    st.print_status();
     st.guardGate();
+    st.print_status();
 
+    st.takeDamage(100);
+    st.guardGate();
     return (0);
 }

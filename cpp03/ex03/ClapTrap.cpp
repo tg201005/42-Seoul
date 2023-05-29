@@ -1,6 +1,6 @@
 #include "ClapTrap.hpp"
 
-int isDefeated (ClapTrap* ct);
+bool isDefeated ();
 
 ////////////////////////// CONSTRUCTORS //////////////////////////
 
@@ -38,20 +38,20 @@ ClapTrap& ClapTrap::operator=(const ClapTrap &ct){
 void ClapTrap::attack(std::string const &target){
     if (this->isDefeated())
         return ;
-    std::cout << "ClapTrap " << this->Name << " attacks " << target << ", causing " << this->Attack_damage << " points of damage!" << std::endl;
+    std::cout << this->Name << " attacks " << target << ", causing " << this->Attack_damage << " points of damage!" << std::endl;
     this->Energy_points--;
 }
 
 void ClapTrap::takeDamage(unsigned int amount){
     if (this->isDefeated())
-    std::cout << "ClapTrap " << this->Name << " takes " << amount << " points of damage!" << std::endl;
+    std::cout << this->Name << " takes " << amount << " points of damage!" << std::endl;
     this->Hit_points = this->Hit_points - amount;
 }
 
 void ClapTrap::beRepaired(unsigned int amount){
     if (this->isDefeated())
         return ;
-    std::cout << "ClapTrap " << this->Name << " is repaired for " << amount << " points of damage!" << std::endl;
+    std::cout << this->Name << " is repaired for " << amount << " points of damage!" << std::endl;
     this->Hit_points = this->Hit_points + amount;
     this->Energy_points--;
 }
@@ -80,14 +80,18 @@ bool ClapTrap::isDefeated ()
 {
     if (this->Hit_points <= 0)
     {
-        std::cout << "ClapTrap " << this->Name << " is dead!" << std::endl;
+        std::cout << this->Name << " is dead!" << std::endl;
         return (1);
     }
     if (this->Energy_points <= 0)
     {
-        std::cout << "ClapTrap " << this->Name << " is out of energy!" << std::endl;
+        std::cout << this->Name << " is out of energy!" << std::endl;
         return (1);
     }
     return (0);
 
+}
+
+void   ClapTrap::print_status(){
+    std::cout << this->Name << " has " << this->Hit_points << " hit points and " << this->Energy_points << " energy points." << std::endl;
 }

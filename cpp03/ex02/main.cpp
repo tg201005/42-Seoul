@@ -4,12 +4,16 @@
 
 int main(){
     FragTrap ft("FragTrap");
-    FragTrap ft2(ft);
-    FragTrap ft3("FragTrap3");
-    ft3 = ft2;
+    
     ft.attack("target");
     ft.takeDamage(10);
+    ft.print_status();
     ft.beRepaired(10);
+    ft.print_status();
+    ft.highFivesGuys();
+    
+    ft.takeDamage(100);
+    ft.print_status();
     ft.highFivesGuys();
     return (0);
 }

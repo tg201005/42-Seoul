@@ -7,12 +7,15 @@ int main(){
     
     a.attack("b");
     b.takeDamage(2);
+    b.print_status();
     b.beRepaired(1);
-    b.attack("c");
-    c.takeDamage(2);
-    c.beRepaired(1);
-    c.attack("a");
-    a.takeDamage(2);
+    b.print_status();
+
+    
+    b.takeDamage(10);
+    b.beRepaired(10);
+    b.attack("a");
+    b.print_status(); 
 
 
 }

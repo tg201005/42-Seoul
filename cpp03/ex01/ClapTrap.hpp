@@ -29,6 +29,7 @@ class ClapTrap{
         int getAttack_damage();
         
         bool    isDefeated();
+        void    print_status();
 
 };
 
