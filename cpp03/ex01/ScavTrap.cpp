@@ -27,6 +27,14 @@ ScavTrap& ScavTrap::operator=(const ScavTrap &st){
     return (*this);
 }
 
+void ScavTrap::attack(std::string const &target){
+    if (this->isDefeated())
+        return ;
+    
+    std::cout << this->Name << " attacks " << target << std::endl;
+    this->energyPoints--;
+}
+
 void ScavTrap::guardGate(){
     if (this->isDefeated())
         return ;
