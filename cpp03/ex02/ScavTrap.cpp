@@ -28,5 +28,7 @@ ScavTrap& ScavTrap::operator=(const ScavTrap &st){
 }
 
 void ScavTrap::guardGate(){
+    if (this->isDefeated())
+        return ;
     std::cout << "ScavTrap have enterred in Gate keeper mode" << std::endl;
 }

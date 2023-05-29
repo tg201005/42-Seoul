@@ -28,5 +28,7 @@ FragTrap& FragTrap::operator=(const FragTrap &ft){
 }
 
 void FragTrap::highFivesGuys(){
+    if (this->isDefeated())
+        return ;
     std::cout << "FragTrap have enterred in high five mode" << std::endl;
 }
