@@ -7,13 +7,13 @@ int main(){
     
     ft.attack("target");
     ft.takeDamage(10);
-    ft.print_status();
+    ft.printStatus();
     ft.beRepaired(10);
-    ft.print_status();
+    ft.printStatus();
     ft.highFivesGuys();
     
     ft.takeDamage(100);
-    ft.print_status();
+    ft.printStatus();
     ft.highFivesGuys();
     return (0);
 }

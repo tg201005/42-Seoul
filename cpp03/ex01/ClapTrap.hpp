@@ -26,7 +26,7 @@ class ClapTrap{
 
         
         bool    isDefeated();
-        void    print_status();
+        void    printStatus();
 
 };
 

@@ -77,6 +77,6 @@ bool ClapTrap::isDefeated ()
 
 }
 
-void   ClapTrap::print_status(){
+void   ClapTrap::printStatus(){
     std::cout << this->Name << " has " << this->hitPoints << " hit points and " << this->energyPoints << " energy points." << std::endl;
 }

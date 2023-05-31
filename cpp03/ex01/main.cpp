@@ -6,11 +6,11 @@ int main(){
 
     st.attack("target");
     st.takeDamage(10);
-    st.print_status();
+    st.printStatus();
     st.beRepaired(10);
-    st.print_status();
+    st.printStatus();
     st.guardGate();
-    st.print_status();
+    st.printStatus();
 
     st.takeDamage(100);
     st.guardGate();
