@@ -1,6 +1,11 @@
 #include "Animal.hpp"
 #include "WrongAnimal.hpp"
 
+void checkLeaks()
+{
+    system("leaks a.out");
+}
+
 int main()
 {
     // const Animal* meta = new Animal();
@@ -28,5 +33,6 @@ int main()
     delete k;
     delete q;
 
+    atexit(checkLeaks);
     return 0;
 }
