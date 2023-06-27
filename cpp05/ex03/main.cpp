@@ -2,36 +2,56 @@
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "Intern.hpp"
 
-int main() {
-    //write the code using Form class
-    //write the code using Bureaucrat class
-    //write the code using try/catch
-
-   Bureaucrat b1("king", 1);
-    Bureaucrat b2("slave", 150);
-
-    std::cout << b1 << std::endl;
-    std::cout << b2 << std::endl;
+int main() 
+{
+    std::cout << "-----Robotomy-----" << std::endl;
     
-    std::cout << "------" << std::endl;
-    
-    ShrubberyCreationForm f3("shrubbery");
+    {
+        Bureaucrat b1("king", 1);
+        Bureaucrat b2("slave", 150);
+        Intern someRandomIntern;
+        Form* rrf;
+        rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+        b1.executeForm(*rrf);    
+        b2.executeForm(*rrf);
+    }
 
-    b1.executeForm(f3);    
-    b2.executeForm(f3);
-    std::cout << "------" << std::endl;
+    std::cout << "-----Presidential-----" << std::endl;
 
-    PresidentialPardonForm f1("president");
-    
-    b1.executeForm(f1);
-    b2.executeForm(f1);
-    std::cout << "------" << std::endl;
-    
-    RobotomyRequestForm f2("robotomy");
+    {
+        Bureaucrat b1("king", 1);
+        Bureaucrat b2("slave", 150);
+        Intern someRandomIntern;
+        Form* rrf;
+        rrf = someRandomIntern.makeForm("presidential pardon", "Bender");
+        b1.executeForm(*rrf);
+        b2.executeForm(*rrf);
+    }
 
-    b1.executeForm(f2);
-    b2.executeForm(f2);
-    std::cout << "------" << std::endl;
-    
+
+
+    std::cout << "-----Shrubbery-----" << std::endl;
+
+   {
+        Bureaucrat b1("king", 1);
+        Bureaucrat b2("slave", 150);
+        Intern someRandomIntern;
+        Form* rrf;
+        rrf = someRandomIntern.makeForm("shrubbery creation", "Bender");
+        b1.executeForm(*rrf);
+        b2.executeForm(*rrf);
+    }
+
+    std::cout << "-----Unknown-----" << std::endl;
+
+    {
+        Bureaucrat b1("king", 1);
+        Bureaucrat b2("slave", 150);
+        Intern someRandomIntern;
+        Form* rrf;
+        rrf = someRandomIntern.makeForm("unknown", "Bender");
+    }
+
 }

@@ -1,7 +1,8 @@
 #include "RobotomyRequestForm.hpp"
 #include "Bureaucrat.hpp"
+#include <cstdlib>
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45), _target(target) {
+RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45), target(target) {
     return ;
 }
 
@@ -16,7 +17,7 @@ RobotomyRequestForm::~RobotomyRequestForm() {
 RobotomyRequestForm & RobotomyRequestForm::operator=(RobotomyRequestForm const & rhs) {
     if (this != &rhs)
     {
-        this->_target = rhs._target;
+        this->target = rhs.target;
     }
     return *this;
 }
@@ -28,9 +29,10 @@ void    RobotomyRequestForm::beSigned(Bureaucrat const & bureaucrat) {
 void    RobotomyRequestForm::execute(Bureaucrat const & target) const {
     if (this->getGradeSign() < target.getGrade())
         throw AForm::GradeTooLowException();
-    std::cout << "* drilling noises *" << std::endl;
+    std::cout << "* drillin noises *" << std::endl;
+    srand(time(NULL));
     if (rand() % 2 == 0)
-        std::cout << this->_target << " has been robotomized successfully" << std::endl;
+        std::cout << this->target << " has been robotomized successfully" << std::endl;
     else
-        std::cout << this->_target << " has failed to be robotomized" << std::endl;
+        std::cout << this->target << " has failed to be robotomized" << std::endl;
 }

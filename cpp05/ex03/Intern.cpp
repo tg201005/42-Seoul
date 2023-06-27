@@ -32,9 +32,10 @@ Form* Intern::makeForm(std::string formName, std::string target) {
     } catch (std::exception& e) {
         std::cout << e.what() << std::endl;
     }
+    return form;
 
 }
 
 const char* Intern::FormNotFoundException::what() const throw() {
-    return "Form not found";
+   return "Form not found";
 }

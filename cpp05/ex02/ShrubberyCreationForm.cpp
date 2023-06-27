@@ -3,18 +3,16 @@
 #include <fstream>
 
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string name) : AForm("ShrubberyCreationForm", 145, 137), _target(name) {}
+ShrubberyCreationForm::ShrubberyCreationForm(std::string target) : AForm("ShrubberyCreationForm", 145, 137), target(name) {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & src) : AForm(src) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const AForm &copy) : AForm(copy) {}
-
 ShrubberyCreationForm & ShrubberyCreationForm::operator=(ShrubberyCreationForm const & rhs) {
     if (this != &rhs)
     {
-        this->_target = rhs._target;
+        this->target = rhs.target;
     }
     return *this;
 }
@@ -32,7 +30,7 @@ void    ShrubberyCreationForm::execute(Bureaucrat const &target) const{
         throw AForm::GradeTooLowException();
     
     std::ofstream file;
-    std::string filename = this->_target + "_shrubbery";
+    std::string filename = this->target + "_shrubbery";
     file.open(filename.c_str());
         if (!file.is_open())
             throw std::runtime_error("Error opening file");

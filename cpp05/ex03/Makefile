@@ -1,10 +1,11 @@
 NAME = a.out
 
 CXX = c++
-CXXFLAGS  = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS  = -Wall -Wextra -Werror -std=c++98 -g
 
 SRCS = main.cpp\
-AForm.cpp\
+Intern.cpp\
+Form.cpp\
 Bureaucrat.cpp\
 PresidentialPardonForm.cpp\
 RobotomyRequestForm.cpp\

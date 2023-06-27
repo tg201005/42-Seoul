@@ -1,10 +1,10 @@
 
-#include "AForm.hpp"
+#include "Form.hpp"
 
-class PresidentialPardonForm : public AForm
+class PresidentialPardonForm : public Form
 {
     private:
-        std::string _target;
+        std::string target;
     public:
         PresidentialPardonForm(std::string target);
         PresidentialPardonForm(PresidentialPardonForm const & src);

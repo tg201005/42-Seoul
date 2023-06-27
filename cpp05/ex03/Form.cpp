@@ -23,14 +23,14 @@ Form& Form::operator=(Form const& other) {
     return *this;
 }
 
-std::ostream& operator<<(std::ostream& os, Form const& form){
-    os << "Form " << form.getName() << " is ";
-    if (form.getSigned()) {
+std::ostream& operator<<(std::ostream& os,  const Form& Form){
+    os << "Form " << Form.getName() << " is ";
+    if (Form.getSigned()) {
         os << "signed";
     } else {
         os << "not signed";
     }
-    os << " and requires grade " << form.getGradeSign() << " to sign and grade " << form.getGradeExec() << " to execute";
+    os << " and requires grade " << Form.getGradeSign() << " to sign and grade " << Form.getGradeExec() << " to execute";
     return os;
 }
 

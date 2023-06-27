@@ -3,25 +3,25 @@
 #include <fstream>
 
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string name) : AForm("ShrubberyCreationForm", 145, 137), _target(name) {}
+ShrubberyCreationForm::ShrubberyCreationForm(std::string name) : Form("ShrubberyCreationForm", 145, 137), target(name) {}
 
-ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & src) : AForm(src) {}
+ShrubberyCreationForm::ShrubberyCreationForm(ShrubberyCreationForm const & src) : Form(src) {}
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
-ShrubberyCreationForm::ShrubberyCreationForm(const AForm &copy) : AForm(copy) {}
+ShrubberyCreationForm::ShrubberyCreationForm(const Form &copy) : Form(copy) {}
 
 ShrubberyCreationForm & ShrubberyCreationForm::operator=(ShrubberyCreationForm const & rhs) {
     if (this != &rhs)
     {
-        this->_target = rhs._target;
+        this->target = rhs.target;
     }
     return *this;
 }
 
 void    ShrubberyCreationForm::beSigned(Bureaucrat const & bureaucrat){
     if (bureaucrat.getGrade() > this->getGradeSign())
-        throw AForm::GradeTooLowException();
+        throw Form::GradeTooLowException();
     else
         this->_signed = true;
 }
@@ -29,10 +29,10 @@ void    ShrubberyCreationForm::beSigned(Bureaucrat const & bureaucrat){
 void    ShrubberyCreationForm::execute(Bureaucrat const &target) const{
 
     if (target.getGrade() > this->getGradeExec())
-        throw AForm::GradeTooLowException();
+        throw Form::GradeTooLowException();
     
     std::ofstream file;
-    std::string filename = this->_target + "_shrubbery";
+    std::string filename = this->target + "_shrubbery";
     file.open(filename.c_str());
         if (!file.is_open())
             throw std::runtime_error("Error opening file");

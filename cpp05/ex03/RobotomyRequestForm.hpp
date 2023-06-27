@@ -5,12 +5,12 @@
 #include <string>
 #include <exception>
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
+#include "Form.hpp"
 
-class RobotomyRequestForm : public AForm
+class RobotomyRequestForm : public Form
 {
     private:
-        std::string _target;
+        std::string target;
     public:
         RobotomyRequestForm(std::string target);
         RobotomyRequestForm(RobotomyRequestForm const & src);

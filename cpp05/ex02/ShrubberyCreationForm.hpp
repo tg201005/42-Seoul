@@ -3,12 +3,11 @@
 class ShrubberyCreationForm : public AForm {
 
     private:
-        std::string _target;
+        std::string target;
 
     public:
-        ShrubberyCreationForm(std::string name);
+        ShrubberyCreationForm(std::string target);
         ShrubberyCreationForm(ShrubberyCreationForm const & src);
-        ShrubberyCreationForm(const AForm &copy);
         ~ShrubberyCreationForm();
         ShrubberyCreationForm &operator=(ShrubberyCreationForm const &rhs);
 
