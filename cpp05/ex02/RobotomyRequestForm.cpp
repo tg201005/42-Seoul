@@ -2,6 +2,10 @@
 #include "Bureaucrat.hpp"
 #include <cstdlib>
 
+RobotomyRequestForm::RobotomyRequestForm() : AForm("RobotomyRequestForm", 72, 45) {
+    return ;
+}
+
 RobotomyRequestForm::RobotomyRequestForm(std::string target) : AForm("RobotomyRequestForm", 72, 45), target(target) {
     return ;
 }

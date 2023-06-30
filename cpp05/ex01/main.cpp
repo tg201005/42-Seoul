@@ -14,8 +14,14 @@ int main() {
     std::cout << f1 << std::endl;
     std::cout << f2 << std::endl;
 
-    King.signForm(f1);
-    King.signForm(f2);
     Slave.signForm(f1);    
     Slave.signForm(f2);
+    std::cout << f1 << std::endl;
+    std::cout << f2 << std::endl;
+    
+    King.signForm(f1);
+    King.signForm(f2);
+    std::cout << f1 << std::endl;
+    std::cout << f2 << std::endl;
+
 }

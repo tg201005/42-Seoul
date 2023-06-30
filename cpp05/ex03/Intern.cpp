@@ -18,7 +18,6 @@ Intern& Intern::operator=(Intern const& rhs) {
 
 Form* Intern::makeForm(std::string formName, std::string target) {
     Form* form = NULL;
-    //using try/catch to avoid using a map
     try {
         if (formName == "robotomy request") {
             form = new RobotomyRequestForm(target);
