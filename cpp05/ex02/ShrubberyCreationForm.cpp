@@ -31,7 +31,10 @@ void    ShrubberyCreationForm::execute(Bureaucrat const &target) const{
         throw AForm::GradeTooLowException();
     
     std::ofstream file;
-    std::string filename = this->target + "_shrubbery";
+    std::string filename = target.getName() + "_shrubbery";
+    std::cout << target.getName() << std::endl;
+    std::cout << filename << std::endl;
+    std::cout << filename.c_str() << std::endl;
     file.open(filename.c_str());
         if (!file.is_open())
             throw std::runtime_error("Error opening file");
