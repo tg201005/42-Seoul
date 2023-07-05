@@ -15,11 +15,19 @@ public:
     
 private:
     static bool isCharLiteral(const std::string& literal);
-    static void convertChar(const std::string& literal);
     static bool isIntLiteral(const std::string& literal);
-    static void convertInt(const std::string& literal);
-    static bool isFloatLiteral(const std::string& literal);
-    static void convertFloat(const std::string& literal);
     static bool isDoubleLiteral(const std::string& literal);
-    static void convertDouble(const std::string& literal);
+    static bool isFloatLiteral(const std::string& literal);
+
+    static void printChar(double &value);
+    static void printInt(double &value);
+    static void printFloat(double &value);
+    static void printDouble(double &value);
+
+    static double  getValue(const std::string& literal);
+
+    ScalarConverter();
+    ~ScalarConverter();
+    ScalarConverter(const ScalarConverter& other);
+    ScalarConverter& operator=(const ScalarConverter& other);
 };
