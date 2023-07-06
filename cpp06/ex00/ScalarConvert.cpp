@@ -141,8 +141,8 @@ void    ScalarConverter::convert(const std::string& literal) {
 
     try {
         value = getValue(literal);
-    } catch (...) {
-        std::cout << "Invalid format" << std::endl;
+    } catch (std::invalid_argument& e) {
+        std::cout << e.what() << std::endl;
         return ;
     }
     
