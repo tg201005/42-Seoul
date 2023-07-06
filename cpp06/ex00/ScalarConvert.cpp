@@ -19,10 +19,8 @@ bool ScalarConverter::isIntLiteral(const std::string& literal) {
 }
 
 bool ScalarConverter::isDoubleLiteral(const std::string& literal) {
-    if (literal == "nan" || literal == "+inf" || literal == "inff" || literal == "-inf") {
-        return true;
-    }
     std::stringstream ss(literal);
+
     double d;
     ss >> d;
 
@@ -30,11 +28,7 @@ bool ScalarConverter::isDoubleLiteral(const std::string& literal) {
 }
 
 bool ScalarConverter::isFloatLiteral(const std::string& literal) {
-    if (literal == "nanf" || literal == "+inff" || literal == "inff" || literal == "-inff") {
-        return true;
-    }
-
-    std::stringstream ss;
+     std::stringstream ss;
 
     if (literal.back() == 'f') {
         ss << literal.substr(0, literal.length() - 1);
@@ -49,10 +43,19 @@ bool ScalarConverter::isFloatLiteral(const std::string& literal) {
     return !ss.fail() && ss.eof();
 }
 
+bool    ScalarConverter::isNanLiteral(const std::string& literal) {
+    return (literal == "nan" || literal == "nanf");
+}
+
+bool    ScalarConverter::isInfLiteral(const std::string& literal) {
+    return (literal == "+inf" || literal == "inff" || literal == "-inf" || literal == "-inff");
+}
+
 // print type
 
 void    ScalarConverter::printChar(double &value){
     std::cout << "char: ";
+
     if (std::isnan(value) || std::isinf(value)){
         std::cout << "impossible" << std::endl;
     }else if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max()){
@@ -107,7 +110,13 @@ double  ScalarConverter::getValue(const std::string& literal) {
     // std::cout << "double cast" << std::stod(literal) << std::endl;
 
 
-    if (isCharLiteral(literal)) {
+    if (isNanLiteral(literal)) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+    else if (isInfLiteral(literal)) {
+        return std::numeric_limits<double>::infinity();
+    }
+    else if (isCharLiteral(literal)) {
         return static_cast<double>(literal[1]);
     }
     else if (isIntLiteral(literal)) {
@@ -119,6 +128,7 @@ double  ScalarConverter::getValue(const std::string& literal) {
     else if (isFloatLiteral(literal)) {
         std::stringstream ss(literal.substr(0, literal.length() - 1));
         float f;
+
         ss >> f;
         return static_cast<double>(f);
     }

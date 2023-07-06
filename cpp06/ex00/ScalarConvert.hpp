@@ -18,6 +18,8 @@ private:
     static bool isIntLiteral(const std::string& literal);
     static bool isDoubleLiteral(const std::string& literal);
     static bool isFloatLiteral(const std::string& literal);
+    static bool isNanLiteral(const std::string& literal);
+    static bool isInfLiteral(const std::string& literal);
 
     static void printChar(double &value);
     static void printInt(double &value);
