@@ -129,7 +129,7 @@ double  ScalarConverter::getValue(const std::string& literal) {
         return d;
     }
     else {
-        throw ;
+        throw std::invalid_argument("Invalid format");
     }
 }
 
