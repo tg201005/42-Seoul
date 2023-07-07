@@ -1,6 +1,8 @@
 #include "Base.hpp"
 
-Base::~Base(){}
+Base::~Base(){
+    std::cout << "Base destructor" << std::endl;
+}
 
 Base    *Base::generate(void){
     int     random;
@@ -53,4 +55,16 @@ void Base::identify(Base &p) {
         std::cout << "type of reference is C" << std::endl;
     } catch(const std::bad_cast&) {
     }
+}
+
+A::~A(){
+    std::cout << "A destructor" << std::endl;
+}
+
+B::~B(){
+    std::cout << "B destructor" << std::endl;
+}
+
+C::~C(){
+    std::cout << "C destructor" << std::endl;
 }
