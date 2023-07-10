@@ -7,3 +7,8 @@ void iter(T* array, size_t length, F func) {
         func(array[i]);
     }
 }
+
+template<typename T>
+void print(T const &x) {
+    std::cout << x << std::endl;
+}
