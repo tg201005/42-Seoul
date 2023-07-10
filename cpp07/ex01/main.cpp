@@ -1,7 +1,7 @@
 #include <iostream>
 #include "iter.hpp"
 
-void printInt(int &x) {
+void printInt(int const &x) {
     std::cout << x << std::endl;
 }
 
@@ -16,10 +16,10 @@ int main() {
     char str[] = "Hello";
     iter(str, 5, printInt);
 
-    // std::cout << "-------------------" << std::endl;
-    // std::cout << "float array:" << std::endl;
-    // float farr[] = {1.1f, 2.2f, 3.3f, 4.4f, 5.5f};
-    // iter(farr, 5, printInt);
+    std::cout << "-------------------" << std::endl;
+    std::cout << "float array:" << std::endl;
+    float farr[] = {1.1f, 2.2f, 3.3f, 4.4f, 5.5f};
+    iter(farr, 5, printInt);
 
 
 
