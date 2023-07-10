@@ -9,13 +9,16 @@ template <typename T>
 Array<T>::Array(void) : _size(0), _array(NULL) {}
 
 template <typename T>
-Array<T>::Array(unsigned int n) : _size(n), _array(new T[n]){
+Array<T>::Array(unsigned int n) : _size(n){
+
+    _array = new T[n];
     std::cout << "Array of " << *_array << " created" << std::endl;
     std::cout << "Array of " << _array << " created" << std::endl;
 }
 
 template <typename T>
-Array<T>::Array(Array const & other) : _size(other._size), _array(new T[other._size]) {
+Array<T>::Array(Array const & other) : _size(other._size){
+    _array = new T[other._size];
     for (unsigned int i = 0; i < other._size; i++) {
         _array[i] = other._array[i];
     }
