@@ -1,7 +1,7 @@
 NAME = a.out
 
 CXX = c++
-CXXFLAGS  = -Wall -Wextra -Werror -std=c++98
+CXXFLAG = -Wall -Wextra -Werror -std=c++98
 
 SRCS = main.cpp\
 AForm.cpp\
@@ -14,12 +14,12 @@ ShrubberyCreationForm.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS ) -c $< -o $@
+	$(CXX) $(CXXFLAG) -c $< -o $@
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS ) $(OBJS) -o $(NAME)
+	$(CXX) $(CXXFLAG) $(OBJS) -o $(NAME)
 
 clean:
 	rm -rf $(OBJS)
