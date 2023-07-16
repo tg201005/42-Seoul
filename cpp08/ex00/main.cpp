@@ -1,21 +1,8 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-template <typename T>
-typename T::iterator easyfind(T &container, int n) {
-    typename T::iterator it;
-
-    it = std::find(container.begin(), container.end(), n);
-    if (it == container.end()) {
-        throw std::exception();
-    }
-    return it;
-}
+#include "easyfind.hpp"
 
 int main() {
     std::vector<int> v;
-    int search = 11;
+    int search = 3;
 
     for (int i = 0; i < 10; i++) {
         v.push_back(i);
