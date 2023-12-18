@@ -5,21 +5,19 @@ Span::Span(unsigned int N) : N(N) {}
 
 Span::Span() {}
 
-Span::Span(const Span &src) {
-    *this = src;
+Span::Span(const Span &sp) {
+    *this = sp;
 }
 
-Span& Span::operator=(const Span &rhs) {
-    if (this != &rhs) {
-        this->N = rhs.N;
-        this->data = rhs.data 
+Span& Span::operator=(const Span &sp) {
+    if (this != &sp) {
+        this->N = sp.N;
+        this->data = sp.data;
     }
     return *this;
 }
 
 Span::~Span() {}
-
-
 
 void Span::addNumber(int num) {
     if (data.size() >= N) {
@@ -30,26 +28,39 @@ void Span::addNumber(int num) {
 
 
 int Span::shortestSpan() {
+    
     if (data.size() < 2) {
-        throw std::invalid_argument("Not enough data in Span");
+        throw std::invalid_argument("Not enough data");
     }
+    
     std::sort(data.begin(), data.end());
-    int shortest = data[1] - data[0];
-    for (unsigned int i = 2; i < data.size(); ++i) {
+    int shortest;
+
+    for (unsigned int i = 1; i < data.size(); ++i) {
         int span = data[i] - data[i - 1];
-        if (span < shortest) {
+        if (i == 1)
+            shortest = span;
+        else {
+            if (span < shortest) {
             shortest = span;
         }
+        }
     }    
+    
     return shortest;
 }
 
 int Span::longestSpan() {
     if (data.size() < 2) {
-        throw std::invalid_argument("Not enough data in Span");
+        throw std::invalid_argument("Not enough data");
     }
-    int minElem = *std::min_element(data.begin(), data.end());
-    int maxElem = *std::max_element(data.begin(), data.end());
+    std::sort(data.begin(), data.end());
+    return data[data.size() - 1] - data[0];
+}
 
-    return maxElem - minElem;
+void Span::print() {
+    for (unsigned int i = 0; i < data.size(); ++i) {
+        std::cout << data[i] << " ";
+    }
+    std::cout << std::endl;
 }

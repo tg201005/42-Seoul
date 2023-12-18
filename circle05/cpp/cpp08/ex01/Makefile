@@ -3,11 +3,11 @@ NAME = ./a.out
 CXX = c++
 CXXFLAG = -Wall -Wextra -Werror -std=c++98 -I.
 
-SRCS = main.cpp \
+spS = main.cpp \
 Span.cpp
 
 
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(spS:.cpp=.o)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAG) -c $< -o $@

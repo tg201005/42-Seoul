@@ -10,8 +10,7 @@ class MutantStack : public std::deque<T> {
         void push(const T& val);
         void pop();
         T& top();
-        const T& top() const;
-        typename std::deque<T>::size_type size() const;
+        typename std::deque<T>::size_type size();
 };
 
 #include "MutantStack.tpp"

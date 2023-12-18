@@ -4,15 +4,15 @@
 
 #include <vector>
 #include <stdexcept>
+#include <iostream>
 
 class Span {
-    unsigned int N;
-    std::vector<int> data;
+
 
     public:
         Span(unsigned int N);
-        Span(const Span &src);
-        Span &operator=(const Span &rhs);
+        Span(const Span &sp);
+        Span &operator=(const Span &sp);
         ~Span();
 
         void addNumber(int num);
@@ -20,9 +20,13 @@ class Span {
         int shortestSpan();
         int longestSpan();
 
+        void print();
+        
     private:
         Span();
-
+        
+        unsigned int N;
+        std::vector<int> data;
 
 };
 

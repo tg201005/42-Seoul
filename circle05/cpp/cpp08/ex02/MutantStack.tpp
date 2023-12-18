@@ -17,12 +17,7 @@ T& MutantStack<T>::top() {
 }
 
 template <typename T>
-const T& MutantStack<T>::top() const {
-    return std::deque<T>::back();
-}
-
-template <typename T>
-typename std::deque<T>::size_type MutantStack<T>::size() const {
+typename std::deque<T>::size_type MutantStack<T>::size() {
     return std::deque<T>::size();
 }
 
