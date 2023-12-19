@@ -12,7 +12,8 @@ Form::Form(std::string name, int gradeSign, int gradeExec) : name(name), _signed
     }
 }
 
-Form::Form(Form const& other) : name(other.name), _signed(other._signed), gradeSign(other.gradeSign), gradeExec(other.gradeExec) {
+Form::Form(Form const& other){
+    *this = other;
 }
 
 Form::~Form() {}
