@@ -5,6 +5,8 @@ BitcoinExchange::BitcoinExchange(std::string priceFile, std::string amountFile)
 {
     this->priceFile = priceFile;
     this->amountFile = amountFile;
+    
+    readPriceDatabase();
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -75,10 +77,7 @@ void BitcoinExchange::printCalculation(const std::string& date, int amount)
         std::cout << "Error: not a positive number." << std::endl;
         return;
     }
-    else if (price > 1000){
-        std::cout << "Error: too large a number." << std::endl;
-        return;
-    }
+
     
     //print calculation
     std::cout << date << " => " << amount << " = " << amount * price << std::endl;
@@ -128,7 +127,10 @@ void BitcoinExchange::readPriceDatabase()
         std::string price = line.substr(line.find(',') + 1, line.length());
 
         //insert database
-        this->database[getDay(date)] = std::stof(price);  
+        std::stringstream ss;
+        float price_float;
+        ss >> price_float;
+        this->database[getDay(date)] = price_float;  
     }
 }
 
@@ -158,14 +160,24 @@ void BitcoinExchange::readAmountDatabase()
     }
 }
 
+//make string to long function with string stream
+
+long stolong(const std::string& str)
+{
+    std::stringstream ss;
+    ss << str;
+    long result;
+    ss >> result;
+    return result;
+}
+
 long BitcoinExchange::getDay(const std::string& date)
 {
     //not using vector, splitString, separte with -, only with cpp98
 
-    long year = std::stoi(date.substr(0, 4));
-    long month = std::stoi(date.substr(5, 2));
-    long day_ = std::stoi(date.substr(8, 2));
-
+    long year = stolong(date.substr(0, 4));
+    long month = stolong(date.substr(5, 2));
+    long day_ = stolong(date.substr(8, 2));
 
     long day = 0;
     for (int i = 0; i < year; i++)
@@ -195,6 +207,5 @@ long BitcoinExchange::getDay(const std::string& date)
 
 void BitcoinExchange::value_calculator()
 {
-    readPriceDatabase();
     readAmountDatabase();
 }
