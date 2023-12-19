@@ -26,6 +26,29 @@ void Span::addNumber(int num) {
     data.push_back(num);
 }
 
+void Span::addNumber(int num1, int num2) {
+    // add num1 ~ num2
+
+    int start, end;
+    
+    if (num1 > num2) {
+        start = num2;
+        end = num1;
+    }
+    else    {
+        start = num1;
+        end = num2;
+    }
+
+    if (data.size() + (end - start) >= N) {
+        throw std::out_of_range("Span is full");
+    }
+
+    for (int i = start; i <= end; ++i) {
+        data.push_back(i);
+    }
+}
+
 
 int Span::shortestSpan() {
     

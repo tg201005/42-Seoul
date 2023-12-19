@@ -16,6 +16,8 @@ int main(){
     return 0;
 }
 
+//
+
 // int main() {
 //     Span sp = Span(10001);
 
@@ -26,6 +28,24 @@ int main(){
 //     }
 
 //     sp.print();
+
+//     try {
+//         std::cout << sp.shortestSpan() << std::endl;
+//         std::cout << sp.longestSpan() << std::endl;
+//     } catch (const std::exception& e) {
+//         std::cerr << e.what() << std::endl;
+//     }
+//     return 0;
+// }
+
+// add number 1~5000
+
+//------------------test case 1------------------
+
+// int main() {
+//     Span sp = Span(5000);
+
+//     sp.addNumber(1, 5000);
 
 //     try {
 //         std::cout << sp.shortestSpan() << std::endl;
