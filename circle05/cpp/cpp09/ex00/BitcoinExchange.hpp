@@ -27,15 +27,14 @@ private:
     std::string amountFile;
 
     //function
-    std::vector<std::string> splitString(const std::string& str, char delimiter);
     long getClosetDate(const std::string& targetDate);
 
     //
-    long getClosetDay(const std::string& target_date);
-    void printCalculation(const std::string& date, int amount);
+    void printCalculation(const std::string& date, float amount);
     
     
     void readPriceDatabase();
+    void printDatabase();
     void readAmountDatabase();
     long getDay(const std::string& date);
 

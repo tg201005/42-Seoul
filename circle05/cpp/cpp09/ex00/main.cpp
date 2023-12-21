@@ -11,6 +11,11 @@ int main(int argc, char **argv)
     const std::string amountFile = argv[1];
 
     BitcoinExchange bitcoinExchange(priceFile, amountFile);
-    bitcoinExchange.value_calculator();
+    try {
+        bitcoinExchange.value_calculator();
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+    }
     return 0;
 }

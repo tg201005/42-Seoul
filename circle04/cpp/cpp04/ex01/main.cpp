@@ -10,10 +10,11 @@ int main()
 {
     int animalCount = 10;
     Animal* animals[animalCount];
+    Dog dog;
 
     // Create and fill the array with Dogs and Cats
     for (int i = 0; i < animalCount / 2; i++) {
-        animals[i] = new Dog();
+        animals[i] = new Dog(dog);
     }
 
 

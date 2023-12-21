@@ -7,6 +7,7 @@ BitcoinExchange::BitcoinExchange(std::string priceFile, std::string amountFile)
     this->amountFile = amountFile;
     
     readPriceDatabase();
+    // printDatabase();
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -31,7 +32,21 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &copy)
 
 //function
 
-bool isValidDate(const std::string& date)
+//윤s
+
+bool isLeapYear(int year)
+{
+    if (year % 4 != 0) // 4로 나누어 떨어지지 않으면 윤년이 아님
+        return false;
+    else if (year % 100 != 0) // 4로 나누어 떨어지지만 100으로 나누어 떨어지지 않으면 윤년
+        return true;
+    else if (year % 400 != 0) // 100으로 나누어 떨어지지만 400으로 나누어 떨어지지 않으면 윤년이 아님
+        return false;
+    else // 400으로 나누어 떨어지면 윤년
+        return true;
+}
+
+bool isValidDateWithLeapYear(const std::string& date)
 {
     if (date.length() != 10)
         return false;
@@ -39,23 +54,48 @@ bool isValidDate(const std::string& date)
     if (date[4] != '-' || date[7] != '-')
         return false;
 
-    int year = atoi(date.substr(0, 4).c_str());
-    int month = atoi(date.substr(5, 2).c_str());
-    int day = atoi(date.substr(8, 2).c_str());
+    std::stringstream ss(date);
+
+    long year, month, day;
+
+    ss >> year;
+    ss.ignore(1);
+    ss >> month;
+    ss.ignore(1);
+    ss >> day;
 
     if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
         return false;
 
-    // Additional logic to check for valid dates based on the month and year can be added here
+    // 윤년을 고려하여 각 월의 일 수를 체크
+    if (month == 2) // 2월인 경우
+    {
+        if (isLeapYear(year)) // 윤년인 경우
+        {
+            if (day > 29) // 29일을 초과하면 유효하지 않음
+                return false;
+        }
+        else // 윤년이 아닌 경우
+        {
+            if (day > 28) // 28일을 초과하면 유효하지 않음
+                return false;
+        }
+    }
+    else if (month == 4 || month == 6 || month == 9 || month == 11) // 4, 6, 9, 11월인 경우
+    {
+        if (day > 30) // 30일을 초과하면 유효하지 않음
+            return false;
+    }
 
     return true;
 }
 
-void BitcoinExchange::printCalculation(const std::string& date, int amount)
+void BitcoinExchange::printCalculation(const std::string& date, float amount)
 {
+    //print date amount 
 
     //check data valid
-    if (!isValidDate(date))
+    if (!isValidDateWithLeapYear(date))
     {
         std::cout << "Error: bad input => " << date << std::endl;
         return;
@@ -66,14 +106,22 @@ void BitcoinExchange::printCalculation(const std::string& date, int amount)
         std::cout << "Error: not a positive number." << std::endl;
         return;
     }
-    else if (amount > 1000){
+    
+    if (amount > 1000){
         std::cout << "Error: too large a number." << std::endl;
         return;
     }
 
     //check price valid
     float price = this->database[getClosetDate(date)];
+
     if (price <= 0){
+        //print map
+        
+        //print date amunt price
+        std::cout << date << " => " << amount << " = " << "0" << std::endl;
+        std::cout << price << std::endl;
+        
         std::cout << "Error: not a positive number." << std::endl;
         return;
     }
@@ -89,23 +137,17 @@ void BitcoinExchange::printCalculation(const std::string& date, int amount)
 //get closest date
 long BitcoinExchange::getClosetDate(const std::string& targetDate)
 {
-    //lopwer_bound
+//If the date used in the input does not exist in your DB then you must use the closest date contained in your DB. Be careful to use the lower date and not the upper one. using with only cpp98
 
-    std::map<long, float>::iterator lower = this->database.lower_bound(getDay(targetDate));
-    if (lower == this->database.begin())
-        return lower->first;
-    if (lower == this->database.end())
+    long targetDay = getDay(targetDate);
+
+    long closestDay = 0;
+    for (std::map<long, float>::iterator it = this->database.begin(); it != this->database.end(); it++)
     {
-        std::map<long, float>::iterator prev = lower;
-        --prev;
-        return prev->first;
+        if (it->first <= targetDay && it->first > closestDay)
+            closestDay = it->first;
     }
-    std::map<long, float>::iterator prev = lower;
-    --prev;
-    if (getDay(targetDate) - prev->first < lower->first - getDay(targetDate))
-        return prev->first;
-    return lower->first;
-
+    return closestDay;
 }
 
 //read database only price file
@@ -122,14 +164,31 @@ void BitcoinExchange::readPriceDatabase()
     std::string line;
     while (std::getline(file, line))
     {
+        if (line.empty())
+            continue;
+
         //not using vector separate with , only with cpp98
         std::string date = line.substr(0, line.find(','));
         std::string price = line.substr(line.find(',') + 1, line.length());
 
+        //white space remove only under cpp98
+        date.erase(std::remove(date.begin(), date.end(), ' '), date.end());
+        price.erase(std::remove(price.begin(), price.end(), ' '), price.end());
+
+        //if date,exchange_rate , continue
+        if (date == "date" && price == "exchange_rate")
+            continue;
+            
+
         //insert database
+        //string to float with string stream
         std::stringstream ss;
+        ss << price;
         float price_float;
         ss >> price_float;
+    
+
+
         this->database[getDay(date)] = price_float;  
     }
 }
@@ -146,17 +205,35 @@ void BitcoinExchange::readAmountDatabase()
     std::string line;
     while (std::getline(file, line))
     {
-        std::string date = line.substr(0, line.find(','));
-        std::string amount = line.substr(line.find(',') + 1, line.length());
 
+        if (line.empty()) {
+            std::cout << "----" << std::endl;
+            continue;
+        }
+
+        std::string date = line.substr(0, line.find('|'));
+        //remote white space from date only with cpp98
+        date.erase(std::remove(date.begin(), date.end(), ' '), date.end());
+
+        std::string amount = line.substr(line.find('|') + 1, line.length());
+        amount.erase(std::remove(amount.begin(), amount.end(), ' '), amount.end());
+        if (date == "date" && amount == "value")
+            continue;
+        
         //string to int with string stream
         std::stringstream ss;
         ss << amount;
-        int amount_int;
-        ss >> amount_int; 
-        //print calculation
+        float amount_float;
+        ss >> amount_float; 
 
-        printCalculation(date, amount_int);
+        char c;
+        if ((ss >> c))
+        {
+            std::cout << "Error: bad input => " << date << " | " << amount << std::endl;
+            continue;
+        }
+
+        printCalculation(date, amount_float);
     }
 }
 
@@ -164,20 +241,30 @@ void BitcoinExchange::readAmountDatabase()
 
 long stolong(const std::string& str)
 {
+    //ussing string stream separte with -, only with cpp98
+
     std::stringstream ss;
     ss << str;
     long result;
     ss >> result;
     return result;
+
 }
 
 long BitcoinExchange::getDay(const std::string& date)
 {
-    //not using vector, splitString, separte with -, only with cpp98
+    std::stringstream ss(date);
 
-    long year = stolong(date.substr(0, 4));
-    long month = stolong(date.substr(5, 2));
-    long day_ = stolong(date.substr(8, 2));
+    long year;
+    long month;
+    long day_;
+
+    ss >> year;
+    ss.ignore(1);
+    ss >> month;
+    ss.ignore(1);
+    ss >> day_;
+
 
     long day = 0;
     for (int i = 0; i < year; i++)
@@ -208,4 +295,12 @@ long BitcoinExchange::getDay(const std::string& date)
 void BitcoinExchange::value_calculator()
 {
     readAmountDatabase();
+}
+
+void BitcoinExchange::printDatabase()
+{
+    for (std::map<long, float>::iterator it = this->database.begin(); it != this->database.end(); it++)
+    {
+        std::cout << it->first << " => " << it->second << std::endl;
+    }
 }
