@@ -1,3 +1,6 @@
+#ifndef PMERGEME_HPP
+#define PMERGEME_HPP
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,15 +9,19 @@
 #include <list>
 #include <map>
 #include <ctime>
-
+#include <exception>
+#include <sstream>
+#include <deque>
+#include <climits>
+#include <set>
+#include <climits>
 
 template <typename Container>
-class PmergeContainer
-{
+class PmergeMe{
     private:
         //canonical form
-        PmergeContainer(const PmergeContainer &copy);
-        PmergeContainer &operator=(const PmergeContainer &copy);
+        PmergeMe(const PmergeMe &copy);
+        PmergeMe &operator=(const PmergeMe &copy);
 
         //data
         char **av;
@@ -27,8 +34,16 @@ class PmergeContainer
         
         void argToContainer();
         void sortContainer();
+        void sortMainContainer();
+        void sortSubContainer();
         void executeContainer();
 
+        void binarySearch(int value, int length);
+        void fillJacobVector(std::vector<int> &jacobVector);
+
+
+        template <typename T>
+        void swapValue(T &mainIt1, T &mainIt2);
         //sort 
         template <typename T>
         void mergeSort(T begin, T end);
@@ -41,66 +56,16 @@ class PmergeContainer
         bool isSame();
         bool isSorted();
         bool isSameSize();
-}
-
-class PmergeMe
-{
-    private:
-        //canonical form
-        PmergeMe(const PmergeMe &copy);
-        PmergeMe &operator=(const PmergeMe &copy);
-
-        //data
-        char **av;
-        int depth;
-
-
-        //vector
-    
-        std::vector<int> unsortedVector;
-        std::vector<int> mainVector;
-        std::vector<int> subVector;
-        std::vector<int> sortedVector;
-        
-        void argToVector();
-        void sortVector();
-        void executeVector();
-
-        //list
-        
-        std::list<int> unsortedList;
-        std::list<int> mainList;
-        std::list<int> subList;
-        std::list<int> sortedList;
-        
-        void argToList();
-        void sortList();
-        void executeList();
-
-        //sort 
-        template <typename T>
-        void mergeSort(T begin, T end);
-        
-        template <typename T>
-        void Merge(T begin, T mid, T end);
-
-        //validity check
-        bool isNumber(std::string str);
-        bool isSame();
-        bool isSorted();
-        bool isSameSize();
-
 
         //time_check two functions
         
         clock_t temp;
-        clock_t vectorSortTime;
-        clock_t listSortTime;
-        
+        clock_t sortTime;
+
         void timerStart();
         void timerEnd();
 
-
+        void printContainer(); 
 
     public:
         //constructor & destructor
@@ -109,6 +74,13 @@ class PmergeMe
 
         //execute
         void execute();
-        void printResult();
+        void printResult(const std::string &containerName);
+
 };
 
+#include "PmergeMe.tpp"
+
+template class PmergeMe<std::deque<int> >;
+template class PmergeMe<std::vector<int> >;
+
+#endif

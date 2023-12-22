@@ -1,5 +1,5 @@
 
-NAME = ./Pmergeme
+NAME = ./PmergeMe
 
 CXX = c++
 CXXFLAG = -Wall -Wextra -Werror -std=c++98 -I.
