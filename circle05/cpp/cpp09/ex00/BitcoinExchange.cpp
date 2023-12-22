@@ -118,9 +118,9 @@ void BitcoinExchange::printCalculation(const std::string& date, float amount)
     if (price <= 0){
         //print map
         
-        //print date amunt price
-        std::cout << date << " => " << amount << " = " << "0" << std::endl;
-        std::cout << price << std::endl;
+        // //print date amunt price
+        // std::cout << date << " => " << amount << " = " << "0" << std::endl;
+        // std::cout << price << std::endl;
         
         std::cout << "Error: not a positive number." << std::endl;
         return;
