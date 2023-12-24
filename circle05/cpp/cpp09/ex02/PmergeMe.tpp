@@ -71,7 +71,7 @@ void PmergeMe<Container>::mergeSort(T begin, T end)
 
     T mid = begin;
     int length = lengthIterator(begin, end);
-    moveIterator(mid, length/2);   
+    moveIterator(mid, length / 2); 
 
     T temp = mid;
     temp ++;
@@ -185,31 +185,41 @@ void PmergeMe<Container>::sortMainContainer()
 template <typename Container>
 void PmergeMe<Container>::binarySearch(int value, int length)
 {
-    // typename Container::iterator begin = mainContainer.begin();
-    // typename Container::iterator end = mainContainer.end();
-    // typename Container::iterator mid = begin;
+    typename Container::iterator begin = mainContainer.begin();
+    typename Container::iterator end = mainContainer.end();
+    typename Container::iterator mid = begin;
 
-    // while (begin != end)
-    // {
-    //     moveIterator(mid, length/2);
-    //     if (*mid == value)
-    //     {
-    //         throw std::invalid_argument("invalid argument");
-    //     }
-    //     else if (*mid > value)
-    //     {
-    //         end = mid;
-    //         moveIterator(mid, length/2);
-    //     }
-    //     else
-    //     {
-    //         begin = mid;
-    //         moveIterator(mid, length/2);
-    //     }
-    // }
-    (void) length;
-    mainContainer.push_back(value);
-    std::sort(mainContainer.begin(), mainContainer.end());
+    while (1)
+    {
+        printContainer();
+        length = length / 2;
+        std::cout << "value: " << value << "\n";
+        std::cout << "length: " << length << "\n";  
+        moveIterator(mid, length);
+        if (length == 0)
+            break;
+        if (*mid == value)
+        {
+            throw std::invalid_argument("invalid argument");
+        }
+        else if (*mid > value)
+        {
+            // begin = begin;
+            end = mid;
+            mid = begin;
+        }
+        else
+        {
+            begin = mid;
+            // end = end;
+            // mid = mid;
+        }
+
+    }
+    
+    //insert value to mainContainer at the position of begin
+
+    mainContainer.insert(++begin, value);
 }
 
 
@@ -217,7 +227,7 @@ void PmergeMe<Container>::binarySearch(int value, int length)
 template <typename Container>
 void PmergeMe<Container>::fillJacobVector(std::vector<int> &jacobVector)
 {
-    int t_[] = {1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923,
+    int t_[] = {0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923,
                 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203,
                 5592405, 11184811, 22369621, 44739243, 89478485, 178956971,
                 357913941, 715827883, INT_MAX};
@@ -245,43 +255,35 @@ void PmergeMe<Container>::sortSubContainer()
     std::vector <int> jacobVector;
     fillJacobVector(jacobVector);
 
-    //jacob vector
-
-    std::cout << "jacobVector: ";
-    for (std::vector<int>::iterator it = jacobVector.begin(); it != jacobVector.end(); it++)
-        std::cout << *it << " ";
-    std::cout << "\n";
 
 
+    int start = 0;
+    int end = -1;
+    int k = 0;
+    int added = 0;
+    while (1)
+    {
+        int value;
+        if (jacobVector[k + 1] >= (int)subContainer.size() && jacobVector[k] < (int)subContainer.size())
+            start = (int)subContainer.size();
+        else
+            start = jacobVector[k + 1];
+        end = jacobVector[k];        
 
-    // int start = 0;
-    // int end = -1;
-    // int k = 0;
-    // int added = 0;
-    // while (1)
-    // {
-    //            if( jacobVector[k + 1] <= (int)subContainer.size())
-    //         break;
-    //     int value;
-    //     start = jacobVector[k + 1];
-    //     end = jacobVector[k];        
-
-    //     std::cout << "start: " << start << " end: " << end << "\n";
-
-    //     while (start != end)
-    //     {
-    //         subIt = subContainer.begin();
-    //         moveIterator(subIt, start);
-    //         value = *subIt;
-    //         binarySearch(value, (int)mainContainer.size() + added);
-    //         start --;    
-    //         added++;
-    //         std::cout << "---\n";
-    //         printContainer();
-    //     }
-
-    //     k++;
-    // }
+        while (start != end )
+        {
+            subIt = subContainer.begin();
+            moveIterator(subIt, start);
+            value = *subIt;
+            binarySearch(value, (int)mainContainer.size() + added);
+            start --;    
+            added++;
+         
+        }
+        if( jacobVector[k + 1] >= (int)subContainer.size())
+            break;
+        k++;
+    }
 }
 
 template <typename Container>
@@ -292,7 +294,6 @@ void PmergeMe<Container>::executeContainer()
     sortMainContainer();
     sortSubContainer();
     printContainer();
-    // mergeSort(sortedContainer.begin(), sortedContainer.end());
     timerEnd();
 
 }

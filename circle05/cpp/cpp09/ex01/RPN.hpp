@@ -16,7 +16,7 @@ class RPN {
         //canonical form
         RPN(const RPN &copy);
         RPN &operator=(const RPN &copy);
-
+        
         //database
         std::stack<int> numberStack;
 
