@@ -4,79 +4,49 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
-#include <iterator>
-#include <list>
-#include <map>
-#include <ctime>
-#include <exception>
-#include <sstream>
 #include <deque>
-#include <climits>
-#include <set>
-#include <climits>
-//usleep header
-#include <unistd.h>
-
-template <typename Container>
-class PmergeMe{
-    private:
-        //canonical form
-        PmergeMe(const PmergeMe &copy);
-        PmergeMe &operator=(const PmergeMe &copy);
-
-        //data
-        char **av;
-        int depth;
-  
-        Container unsortedContainer;
-        Container mainContainer;
-        Container subContainer;
-        Container sortedContainer;
-        
-        void argToContainer();
-        void sortContainer();
-        void sortMainContainer();
-        void sortSubContainer();
-        void executeContainer();
-
-        void binarySearch(int value, int length);
-        void fillJacobVector(std::vector<int> &jacobVector);
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <list>
+#include <cstdlib>
+#include <sstream>
 
 
-        template <typename T>
-        void swapValue(T &mainIt1, T &mainIt2);
-        //sort 
-        template <typename T>
-        void mergeSort(T begin, T end);
-        
-        template <typename T>
-        void Merge(T begin, T mid, T end);
 
-        //validity check
-        bool isNumber(std::string str);
-        bool isSame();
-        bool isSorted();
-        bool isSameSize();
+#define VERBOSE 1
 
-        //time_check two functions
-        
-        clock_t temp;
-        clock_t sortTime;
-
-        void timerStart();
-        void timerEnd();
-
-        void printContainer(); 
-
+template <typename C>
+class PmergeMe
+{
     public:
-        //constructor & destructor
-        PmergeMe(char **av);
-        ~PmergeMe();
+        void parseInput(char** input);
 
-        //execute
-        void execute();
-        void printResult(const std::string &containerName);
+        PmergeMe(char **input, const char *containerName);
+        ~PmergeMe();
+        PmergeMe(PmergeMe const& src);
+        PmergeMe& operator=(PmergeMe const& src);
+
+        
+        void	print();
+        void    execute(); 
+
+    private:        
+        void    moveIter(typename C::iterator iter, int num);
+
+        void	sort();
+        void	recurSort(C& vec, C& indexes);
+        void	rearrange(C& vec, C& indexes);
+        void	binaryInsert(C& vecMain, C& vecPend, C& indMain, C& indPend);
+        
+        int     depth;
+
+        //Container
+        C _container;
+        C _ori_container;
+        std::string containerName;
+        
+        clock_t _time;
 
 };
 
