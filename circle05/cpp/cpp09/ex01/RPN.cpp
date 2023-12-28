@@ -15,7 +15,7 @@ RPN::RPN(const RPN &copy)
     *this = copy;
 }
 
-RPn &RPN::operator=(const RPN &copy)
+RPN &RPN::operator=(const RPN &copy)
 {
     if (this != &copy)
     {
