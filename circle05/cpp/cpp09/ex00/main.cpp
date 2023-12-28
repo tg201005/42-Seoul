@@ -7,11 +7,12 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    
+    try {
     const std::string priceFile = "data.csv";
     const std::string amountFile = argv[1];
 
     BitcoinExchange bitcoinExchange(priceFile, amountFile);
-    try {
         bitcoinExchange.value_calculator();
     }
     catch (std::exception &e) {
