@@ -5,9 +5,8 @@ BitcoinExchange::BitcoinExchange(std::string priceFile, std::string amountFile)
 {
     this->priceFile = priceFile;
     this->amountFile = amountFile;
-    
+
     readPriceDatabase();
-    // printDatabase();
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -49,12 +48,10 @@ bool isValidDateWithLeapYear(const std::string& date)
 {
     if (date.length() != 10)
     {
-        std::cout << "Error: bad input => " << date << std::endl;
         return false;
     }
     if (date[4] != '-' || date[7] != '-')
     {
-        std::cout << "Error: bad input => " << date << std::endl;
         return false;
     }
     std::stringstream ss(date);
@@ -117,16 +114,12 @@ void BitcoinExchange::printCalculation(const std::string& date, float amount)
 
     //check price valid
 
-    float price = this->database[getClosetDate(date)];
-
-    if (price <= 0){
-        //print map
-        
-        // //print date amunt price
-        // std::cout << date << " => " << amount << " = " << "0" << std::endl;
-        // std::cout << price << std::endl;
-        
-        std::cout << "Error: not a positive price." << std::endl;
+    float price;
+    try {
+        price = this->database[getClosetDate(date)];
+    }
+    catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
         return;
     }
 
@@ -141,13 +134,15 @@ long BitcoinExchange::getClosetDate(const std::string& targetDate)
 {
 //If the date used in the input does not exist in your DB then you must use the closest date contained in your DB. Be careful to use the lower date and not the upper one. using with only cpp98
 
+    
+    
     long targetDay = getDay(targetDate);
 
     long closestDay = 0;
 
     //start form the end of map, 
-
-    for (std::map<long, float>::reverse_iterator it = this->database.rbegin(); it != this->database.rend(); it++)
+    std::map<long, float>::reverse_iterator it;
+    for (it = this->database.rbegin(); it != this->database.rend(); it++)
     {
         if (it->first <= targetDay)
         {
@@ -155,6 +150,9 @@ long BitcoinExchange::getClosetDate(const std::string& targetDate)
             break;
         }
     }
+
+    if (it == this->database.rend())
+        throw std::invalid_argument("Error: no data available for this date.");
 
     
     return closestDay;
@@ -199,7 +197,7 @@ void BitcoinExchange::readPriceDatabase()
 
         if (ss.fail() || !ss.eof())
         {
-            std::cout << "Error: bad input price => " << date << " | " << price << std::endl;
+            std::cout << "Error: bad input => " << date << " | " << price << std::endl;
             continue;
         }
     
@@ -241,7 +239,7 @@ void BitcoinExchange::readAmountDatabase()
 
         if (ss.fail() || !ss.eof())
         {
-            std::cout << "Error: bad input amount => " << date << " | " << amount << std::endl;
+            std::cout << "Error: bad input => " << date << " | " << amount << std::endl;
             continue;
         }
         printCalculation(date, amount_float);
@@ -267,14 +265,12 @@ long BitcoinExchange::getDay(const std::string& date)
     
     if (date.length() != 10)
     {
-        std::cout << "Error: bad input => " << date << std::endl;
-        return 0;
+        throw std::invalid_argument("Error: bad input => " + date);
     }
 
     if (date[4] != '-' || date[7] != '-')
     {
-        std::cout << "Error: bad input => " << date << std::endl;
-        return 0;
+        throw std::invalid_argument("Error: bad input => " + date);
     }
     std::stringstream ss(date);
    
