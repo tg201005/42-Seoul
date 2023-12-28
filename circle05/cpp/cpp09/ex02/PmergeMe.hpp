@@ -14,7 +14,7 @@
 
 
 
-#define VERBOSE 1
+#define DEBUG 0
 
 template <typename C>
 class PmergeMe
@@ -45,8 +45,8 @@ class PmergeMe
         C _container;
         C _ori_container;
         std::string containerName;
-        
-        clock_t _time;
+
+        clock_t sorted_time;        
 
 };
 

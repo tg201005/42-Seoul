@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include "PmergeMe.cpp"
 
 //canonical
 template <typename C>
@@ -46,9 +47,10 @@ void    PmergeMe<C>::execute()
 {
     try {
        //time start
-        _time = clock();
+        clock_t start = clock();
         sort();
-        _time = clock() - _time;
+        clock_t end = clock();
+        sorted_time = (end - start);
         print();
     }
     catch (std::exception& e)
@@ -77,7 +79,7 @@ void    PmergeMe<C>::parseInput(char** input)
         _container.push_back(temp);        
 
         //if input[i] is not positive integer and atoi is not working
-        if (temp < 0)
+        if (temp <= 0)
             throw std::invalid_argument("Invalid argument");
         
         i++;
@@ -99,7 +101,7 @@ void    PmergeMe<C>::print()
         std::cout << *it << " ";
     std::cout << std::endl;
 
-    std::cout << "Time to process a range of " << _container.size() << " elements with std::["<< containerName<< "] : " << _time << " us" << std::endl;
+    std::cout << "Time to process a range of " << _container.size() << " elements with std::"<< containerName<< " : " << sorted_time << " us" << std::endl;
 
     std::cout << "----------------------------------------" << std::endl;
 }
@@ -153,7 +155,7 @@ template <typename C>
 void    PmergeMe<C>::binaryInsert(C& containerMain, C& containerPend, 
 C& indexesMain, C& indexesPend)
 {
-    if (VERBOSE)
+    if (DEBUG)
     {
         std::cout << "-----binaryInsert - s - :: depth: " << depth << "  --------------"<< std::endl;
         std::cout << "containerMain: ";
@@ -210,7 +212,7 @@ C& indexesMain, C& indexesPend)
             if (j == 1)
                 it = containerMain.begin();
             else
-                it = std::lower_bound(containerMain.begin(), containerMain.begin() + insertSize, containerPend[j - 1]);
+                it= std::lower_bound(containerMain.begin(), containerMain.begin() + insertSize, containerPend[j - 1]);
 
             if (!indexesMain.empty()) 
                 //remember origin sequence
@@ -222,7 +224,7 @@ C& indexesMain, C& indexesPend)
         }
     }
 
-    if (VERBOSE)
+    if (DEBUG)
     {
         std::cout << "-----binaryInsert - l - :: depth: " << depth << "  --------------"<< std::endl;
         std::cout << "containerMain: ";
@@ -253,7 +255,7 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
     // end point
         
     depth++;
-    if (VERBOSE)
+    if (DEBUG)
         {
             std::cout << "-----recur - s - :: depth: " << depth << "  --------------"<< std::endl;
             std::cout << "container: ";
@@ -300,7 +302,7 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
         for (unsigned int i = 0; i < container.size(); i++)
             subIndexes.push_back(i);
         recurSort(containerMain, subIndexes);
-        rearrange(containerPend, subIndexes);
+        // rearrange(containerPend, subIndexes);
 
         binaryInsert(containerMain, containerPend, indexesMain, indexesPend);
 
@@ -353,7 +355,7 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
         indexes = indexesMain;
     }
 
-    if (VERBOSE)
+    if (DEBUG)
         {
             std::cout << "-----recur - l - :: depth: " << depth << "  --------------"<< std::endl;
             std::cout << "container: ";
