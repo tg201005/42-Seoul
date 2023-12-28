@@ -178,17 +178,21 @@ C& indexesMain, C& indexesPend)
     }
 
     C   jacobsthal;
+    C   maxChainSize;
     unsigned int jacobPrev = 1;
+
     unsigned int insertSize;
     typename C::iterator it;
 
     jacobsthal.push_back(1);
+    maxChainSize.push_back(1);
 
     //make jacobsthal sequence
     while((unsigned int)jacobsthal.back() < containerPend.size())
     {
         jacobsthal.push_back(jacobsthal.back() + 2 * jacobPrev);
         jacobPrev = *(jacobsthal.end() - 2);
+        maxChainSize.push_back((maxChainSize.back() + 1) * 2 - 1);
     }
 
     for (unsigned int i = 0; i < jacobsthal.size(); i++)
@@ -206,7 +210,7 @@ C& indexesMain, C& indexesPend)
                 continue;
 
             //the length of containerPend can be longer than containerMain
-            insertSize = std::min((int)std::distance(containerMain.begin(), containerMain.end()), (int)jacobsthal[i]);
+            insertSize = std::min((int)std::distance(containerMain.begin(), containerMain.end()), maxChainSize[i]);
 
             //find the position to insert
             if (j == 1)
@@ -299,10 +303,10 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
       
         C subIndexes;
 
-        for (unsigned int i = 0; i < container.size(); i++)
+        for (unsigned int i = 0; i < containerMain.size(); i++)
             subIndexes.push_back(i);
         recurSort(containerMain, subIndexes);
-        // rearrange(containerPend, subIndexes);
+        rearrange(containerPend, subIndexes);
 
         binaryInsert(containerMain, containerPend, indexesMain, indexesPend);
 
@@ -341,13 +345,13 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
         indexesPend.insert(indexesPend.end(), indexes.begin() + container.size() / 2, indexes.end());
 
         C subIndexes;
-        for (unsigned int i = 0; i < container.size(); i++)
+        for (unsigned int i = 0; i < containerMain.size(); i++)
             subIndexes.push_back(i);
         recurSort(containerMain, subIndexes);
-        // rearrange(containerPend, subIndexes);
+        rearrange(containerPend, subIndexes);
 
-        // rearrange(indexesMain, subIndexes);
-        // rearrange(indexesPend, subIndexes);
+        rearrange(indexesMain, subIndexes);
+        rearrange(indexesPend, subIndexes);
 
 
         binaryInsert(containerMain, containerPend, indexesMain, indexesPend);
