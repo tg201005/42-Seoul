@@ -221,10 +221,36 @@ C& indexesMain, C& indexesPend)
                 continue;
                 
             // adating first swap, and binary insert
-            insertSize = j + stack;
+            insertSize = std::min(j + stack, (unsigned int)containerMain.size() - 1);  
+            
+            // if (DEBUG)
+            // {
+            //     //j + stack, containerMain.size()
+            //     std::cout << "j + stack: " << j + stack << std::endl;
+            //     std::cout << "containerMain.size(): " << containerMain.size() << std::endl;
+
+            //     //print arg of lower_bound
+            //     //print containerMain.begin(), containerMain.begin() ->end
+            //     std::cout <<"containerMain" << std::endl;
+            //     for (typename C::iterator it = containerMain.begin(); it != containerMain.end(); it++)
+            //         std::cout << *it << " ";
+            //     std::cout << std::endl;
+
+
+            //     std::cout << "containerMain.begin(): " << *containerMain.begin() << std::endl;
+            //     std::cout << "containerMain.size(): " << containerMain.size() << std::endl;
+            //     std::cout << "insertSize: " << insertSize << std::endl;
+            //     std::cout << "containerMain.begin() + insertSize: " << *(containerMain.begin() + insertSize) << std::endl;
+            //     std::cout << "containerPend[j - 1]: " << containerPend[j - 1] << std::endl;
+
+            //     //print j, i, jacobsthal[i], jacobPrev
+            //     std::cout << "i: " << i << std::endl;
+            //     std::cout << "j: " << j << std::endl;
+
+            // }
 
             //find the position to insert
-            if (j == 1)
+            if (j == 1 )
                 it = containerMain.begin();
             else
                 it= std::lower_bound(containerMain.begin(), containerMain.begin() + insertSize, containerPend[j - 1]);

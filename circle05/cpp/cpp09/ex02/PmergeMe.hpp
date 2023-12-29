@@ -14,7 +14,7 @@
 
 
 
-#define DEBUG 0
+#define DEBUG 1
 
 template <typename C>
 class PmergeMe
