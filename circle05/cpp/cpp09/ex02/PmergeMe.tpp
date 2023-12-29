@@ -117,11 +117,45 @@ void    PmergeMe<C>::sort()
 template <typename C>
 void    PmergeMe<C>::rearrange(C& container, C& indexes)
 {
+    //print rearrange before
+
+    if (DEBUG)
+    {
+        std::cout << "-----rearrange - s - :: depth: " << depth << "  --------------"<< std::endl;
+        std::cout << "container: ";
+        for (typename C::iterator it = container.begin(); it != container.end(); it++)
+            std::cout << *it << " ";
+        std::cout << std::endl;
+        std::cout << "indexes: ";
+        for (typename C::iterator it = indexes.begin(); it != indexes.end(); it++)
+            std::cout << *it << " ";
+        
+        std::cout << std::endl;
+        std::cout << "-----rearrange - s - :: depth: " << depth << "  --------------"<< std::endl;
+    }
+
     C copyContainer = container;
-    for (unsigned int i = 0; i < container.size(); i++)
+    for (unsigned int i = 0; i < indexes.size(); i++)
     {
         container[i] = copyContainer[indexes[i]];
-    }   
+    }
+
+    if (DEBUG)
+    {
+        std::cout << "-----rearrange - e - :: depth: " << depth << "  --------------"<< std::endl;
+        std::cout << "container: ";
+        for (typename C::iterator it = container.begin(); it != container.end(); it++)
+            std::cout << *it << " ";
+        std::cout << std::endl;
+        std::cout << "indexes: ";
+        for (typename C::iterator it = indexes.begin(); it != indexes.end(); it++)
+            std::cout << *it << " ";
+        
+        std::cout << std::endl;
+        std::cout << "-----rearrange - e - :: depth: " << depth << "  --------------"<< std::endl;
+    }
+
+    //using iterator function same
     return ;
 }
     
@@ -155,44 +189,21 @@ template <typename C>
 void    PmergeMe<C>::binaryInsert(C& containerMain, C& containerPend, 
 C& indexesMain, C& indexesPend)
 {
-    if (DEBUG)
-    {
-        std::cout << "-----binaryInsert - s - :: depth: " << depth << "  --------------"<< std::endl;
-        std::cout << "containerMain: ";
-        for (typename C::iterator it = containerMain.begin(); it != containerMain.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "containerPend: ";
-        for (typename C::iterator it = containerPend.begin(); it != containerPend.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "indexesMain: ";
-        for (typename C::iterator it = indexesMain.begin(); it != indexesMain.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "indexesPend: ";
-        for (typename C::iterator it = indexesPend.begin(); it != indexesPend.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "-----binaryInsert - s - :: depth: " << depth << "  --------------"<< std::endl;   
-    }
 
     C   jacobsthal;
-    C   maxChainSize;
     unsigned int jacobPrev = 1;
 
     unsigned int insertSize;
+    unsigned int stack = 0;
     typename C::iterator it;
 
     jacobsthal.push_back(1);
-    maxChainSize.push_back(1);
 
     //make jacobsthal sequence
     while((unsigned int)jacobsthal.back() < containerPend.size())
     {
         jacobsthal.push_back(jacobsthal.back() + 2 * jacobPrev);
         jacobPrev = *(jacobsthal.end() - 2);
-        maxChainSize.push_back((maxChainSize.back() + 1) * 2 - 1);
     }
 
     for (unsigned int i = 0; i < jacobsthal.size(); i++)
@@ -208,9 +219,9 @@ C& indexesMain, C& indexesPend)
             // jacob = 3000, jacob prev = 1000 constainerPend size = 1500, 2999~1500 is not, 1499~1000 is used
             if (j > containerPend.size())
                 continue;
-
-            //the length of containerPend can be longer than containerMain
-            insertSize = std::min((int)std::distance(containerMain.begin(), containerMain.end()), maxChainSize[i]);
+                
+            // adating first swap, and binary insert
+            insertSize = j + stack;
 
             //find the position to insert
             if (j == 1)
@@ -224,30 +235,9 @@ C& indexesMain, C& indexesPend)
             
             //insert the value
             containerMain.insert(it, containerPend[j - 1]);
-        
-        }
-    }
+            stack++;
 
-    if (DEBUG)
-    {
-        std::cout << "-----binaryInsert - l - :: depth: " << depth << "  --------------"<< std::endl;
-        std::cout << "containerMain: ";
-        for (typename C::iterator it = containerMain.begin(); it != containerMain.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "containerPend: ";
-        for (typename C::iterator it = containerPend.begin(); it != containerPend.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "indexesMain: ";
-        for (typename C::iterator it = indexesMain.begin(); it != indexesMain.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "indexesPend: ";
-        for (typename C::iterator it = indexesPend.begin(); it != indexesPend.end(); it++)
-            std::cout << *it << " ";
-        std::cout << std::endl;
-        std::cout << "-----binaryInsert - l - :: depth: " << depth << "  --------------"<< std::endl;
+        }
     }
 
     return ;
@@ -257,23 +247,24 @@ template <typename C>
 void    PmergeMe<C>::recurSort(C& container, C& indexes)
 {
     // end point
+
+    if (DEBUG)
+    {
+        std::cout << "-----recur - s - :: depth: " << depth << "  --------------"<< std::endl;
+        std::cout << "container: ";
+        for (typename C::iterator it = container.begin(); it != container.end(); it++)
+            std::cout << *it << " ";
+        std::cout << std::endl;
+        std::cout << "indexes: ";
+        for (typename C::iterator it = indexes.begin(); it != indexes.end(); it++)
+            std::cout << *it << " ";
+        
+        std::cout << std::endl;
+        std::cout << "-----recur - s - :: depth: " << depth << "  --------------"<< std::endl;
+    }    
         
     depth++;
-    if (DEBUG)
-        {
-            std::cout << "-----recur - s - :: depth: " << depth << "  --------------"<< std::endl;
-            std::cout << "container: ";
-            for (typename C::iterator it = container.begin(); it != container.end(); it++)
-                std::cout << *it << " ";
-            std::cout << std::endl;
-            std::cout << "indexes: ";
-            for (typename C::iterator it = indexes.begin(); it != indexes.end(); it++)
-                std::cout << *it << " ";
-            
-            std::cout << std::endl;
-            std::cout << "-----recur - s - :: depth: " << depth << "  --------------"<< std::endl;
-        }
-        
+
     if (container.size() == 1)
         return ;
 
@@ -312,9 +303,13 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
 
         container = containerMain;
         indexes = indexesMain;
+
+
     }
     else 
     {
+
+
         typename C::iterator itInd1;
         typename C::iterator itInd2;
         
@@ -347,32 +342,19 @@ void    PmergeMe<C>::recurSort(C& container, C& indexes)
         C subIndexes;
         for (unsigned int i = 0; i < containerMain.size(); i++)
             subIndexes.push_back(i);
+        
         recurSort(containerMain, subIndexes);
-        rearrange(containerPend, subIndexes);
 
+        rearrange(containerPend, subIndexes);
         rearrange(indexesMain, subIndexes);
         rearrange(indexesPend, subIndexes);
-
 
         binaryInsert(containerMain, containerPend, indexesMain, indexesPend);
         container = containerMain;
         indexes = indexesMain;
+
     }
 
-    if (DEBUG)
-        {
-            std::cout << "-----recur - l - :: depth: " << depth << "  --------------"<< std::endl;
-            std::cout << "container: ";
-            for (typename C::iterator it = container.begin(); it != container.end(); it++)
-                std::cout << *it << " ";
-            std::cout << std::endl;
-            std::cout << "indexes: ";
-            for (typename C::iterator it = indexes.begin(); it != indexes.end(); it++)
-                std::cout << *it << " ";
-            
-            std::cout << std::endl;
-            std::cout << "-----recur - l - :: depth: " << depth << "  --------------"<< std::endl;
-        }
 
     return ;
 }
