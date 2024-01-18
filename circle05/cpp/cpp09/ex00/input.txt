@@ -61,7 +61,3 @@ date | value
 2023-02-29 | 1
 
 2009-01-04 | 5
-
-1. two input
-2. amount
-3. invalide date
